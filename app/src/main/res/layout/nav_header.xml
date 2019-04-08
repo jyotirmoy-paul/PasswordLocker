@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="176dp"
+    android:background="@color/colorPrimaryDark"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <View
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"/>
+
+    <TextView
+        android:textSize="40sp"
+        android:gravity="center"
+        android:text="T"
+        android:textColor="#fff"
+        android:textStyle="bold"
+        android:background="@drawable/profile_identity_background"
+        android:id="@+id/user_profile_pic"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Test User"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/user_detail"
+        android:textSize="13sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+91 9988665511"
+        android:textColor="#fff" />
+
+</LinearLayout>
