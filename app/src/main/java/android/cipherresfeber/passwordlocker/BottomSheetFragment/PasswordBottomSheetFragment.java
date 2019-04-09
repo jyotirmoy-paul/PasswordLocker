@@ -64,7 +64,7 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
 
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
-                if(decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
+                if(false && decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
                     editTextDecryptionPassword.setError("Invalid Length");
                     editTextDecryptionPassword.requestFocus();
                     return;
@@ -73,8 +73,8 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
                 try{
 
                     // get the user password and use that to decrypt the "Stored Password"
-                    AESCryptography.setKey(decryptionPassword);
-                    decryptedPassword = AESCryptography.decrypt(modifyUserPassword(encryptedPassword));
+                    AESCryptography.setKey(modifyUserPassword(decryptionPassword));
+                    decryptedPassword = AESCryptography.decrypt(encryptedPassword);
 
                     textViewPassword.setText(decryptedPassword);
                     textViewPassword.setTextColor(getResources().getColor(android.R.color.holo_green_light));
@@ -82,6 +82,8 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
                     // allowing copying of password only if password retrieval is successful
                     imageViewCopyPassword.setVisibility(View.VISIBLE);
                     imageViewCopyPassword.setOnClickListener(onClickListener);
+
+                    Toast.makeText(getContext(), "Decryption Successful", Toast.LENGTH_SHORT).show();
 
                 } catch(Exception e){
                     Toast.makeText(getContext(), "Wrong Password!", Toast.LENGTH_SHORT).show();
@@ -102,6 +104,7 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
             ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("password", decryptedPassword);
             clipboard.setPrimaryClip(clip);
+            Toast.makeText(getContext(), "Password Copied to Clipboard", Toast.LENGTH_SHORT).show();
         }
     };
 

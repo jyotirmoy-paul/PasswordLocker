@@ -2,14 +2,21 @@ package android.cipherresfeber.passwordlocker.UserDataTypes;
 
 public class PasswordData {
 
-    private String serviceProvider;
-    private String loginId;
-    private String password;
+    public String serviceProvider;
+    public String loginId;
+    public String password;
+    public String firebaseKey;
 
-    public PasswordData(String serviceProvider, String loginId, String password){
+    // no-argument constructor used by firebase
+    public PasswordData(){
+
+    }
+
+    public PasswordData(String serviceProvider, String loginId, String password, String firebaseKey){
         this.serviceProvider = serviceProvider;
         this.loginId = loginId;
         this.password = password;
+        this.firebaseKey = firebaseKey;
     }
 
     public String getServiceProvider(){
@@ -22,6 +29,10 @@ public class PasswordData {
 
     public String getPassword(){
         return password;
+    }
+
+    public String getFirebaseKey(){
+        return firebaseKey;
     }
 
 }

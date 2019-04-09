@@ -19,6 +19,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 
 public class RetrievePasswordFragment extends Fragment {
@@ -31,6 +37,7 @@ public class RetrievePasswordFragment extends Fragment {
     PasswordAdapter adapter;
     ArrayList<PasswordData> passwordList;
 
+    DatabaseReference reference;
 
     @Nullable
     @Override
@@ -45,9 +52,37 @@ public class RetrievePasswordFragment extends Fragment {
 
         passwordList = new ArrayList<>();
 
-
         // TODO: populate the passwordList from firebase database
+        reference = FirebaseDatabase.getInstance().getReference()
+                .child("password_data").child("user_uid");
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                PasswordData passwordData = dataSnapshot.getValue(PasswordData.class);
+                passwordList.add(passwordData);
+                adapter.notifyDataSetChanged();
+            }
 
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         // recycler view adapter and layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
