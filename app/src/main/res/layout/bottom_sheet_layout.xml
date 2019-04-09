@@ -1,22 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
+    android:padding="10dp"
     android:gravity="center_horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+   <TextView
+       android:layout_centerHorizontal="true"
+       android:id="@+id/txvServiceProviderName"
+       android:textColor="#000"
+       android:textStyle="bold"
+       android:textSize="20sp"
+       android:text="Github.com"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content" />
+
     <TextView
-        android:id="@+id/txvInformation"
-        android:text="This is an bottom sheet"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txvServiceProviderName"
+        android:id="@+id/txvLoginId"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:layout_marginTop="10dp"
+        android:text="something@company.com"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txvLoginId"
+        android:id="@+id/txvPassword"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="17sp"
+        android:layout_marginTop="5dp"
+        android:text="c_ldk?ecropck124:a87ec9/"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/imvCopyContent"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_copy_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp" />
+
+    <EditText
+        android:layout_below="@+id/txvPassword"
+        android:id="@+id/etDecryptionPassword"
+        android:textColor="#000"
+        android:hint="Decryption Password"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Button
-        android:layout_marginBottom="100dp"
-        android:id="@+id/btnExample"
-        android:layout_marginTop="10dp"
-        android:text="Buttom 1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/etDecryptionPassword"
+        android:textSize="17sp"
+        android:id="@+id/btnDecryptPassword"
+        android:layout_marginTop="5dp"
+        android:text="decrypt password"
+        android:layout_marginBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

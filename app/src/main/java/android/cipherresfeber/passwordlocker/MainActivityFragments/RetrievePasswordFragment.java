@@ -14,6 +14,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -28,7 +29,7 @@ public class RetrievePasswordFragment extends Fragment {
     EditText editTextSearchPasswords;
 
     PasswordAdapter adapter;
-    ArrayList<PasswordData> data;
+    ArrayList<PasswordData> passwordList;
 
 
     @Nullable
@@ -42,23 +43,16 @@ public class RetrievePasswordFragment extends Fragment {
         parentLayoutDataNotAvail = view.findViewById(R.id.parentLayoutDataNotAvail);
         editTextSearchPasswords = view.findViewById(R.id.etSearchPasswords);
 
-        data = new ArrayList<>();
-        data.add(new PasswordData("Github.com","fakename@gmail.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Google","coolname@gmail.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Google","whoever@whatever.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Netflix","who@anything.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Protonmail","fake@original.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Amazon.com","9988776655","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Amazon.com","me@whatever.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Netflix","people@company.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Netflix","man@enterprise.com","efH_kodp59?>_sd"));
-        data.add(new PasswordData("Amazon","women@something.com","efH_kodp59?>_sd"));
+        passwordList = new ArrayList<>();
+
+
+        // TODO: populate the passwordList from firebase database
 
 
         // recycler view adapter and layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new PasswordAdapter(getContext(), data, getFragmentManager());
+        adapter = new PasswordAdapter(getContext(), passwordList, getFragmentManager());
         recyclerView.setAdapter(adapter);
 
         // edit text for filtering the list according to user's search
@@ -78,20 +72,17 @@ public class RetrievePasswordFragment extends Fragment {
         return view;
     }
 
+    // utility method for filtering user searched keyword through the entire password database
     private void filterResult(String value){
-
         ArrayList<PasswordData> filteredList = new ArrayList<>();
-
-        for(PasswordData pd : data){
+        for(PasswordData pd : passwordList){
             String provider = pd.getServiceProvider();
             String id = pd.getLoginId();
             if(provider.toLowerCase().contains(value) || id.toLowerCase().contains(value)){
                 filteredList.add(pd);
             }
         }
-
         adapter.filterList(filteredList);
-
     }
 
 }
