@@ -43,24 +43,25 @@ public class RetrievePasswordFragment extends Fragment {
         editTextSearchPasswords = view.findViewById(R.id.etSearchPasswords);
 
         data = new ArrayList<>();
-        data.add(new PasswordData("Github.com","fakename@gmail.com","anything"));
-        data.add(new PasswordData("Google","coolname@gmail.com","anything"));
-        data.add(new PasswordData("Google","whoever@whatever.com","anything"));
-        data.add(new PasswordData("Netflix","who@anything.com","anything"));
-        data.add(new PasswordData("Protonmail","fake@original.com","anything"));
-        data.add(new PasswordData("Amazon.com","9988776655","anything"));
-        data.add(new PasswordData("Amazon.com","me@whatever.com","anything"));
-        data.add(new PasswordData("Netflix","people@company.com","anything"));
-        data.add(new PasswordData("Netflix","man@enterprise.com","anything"));
-        data.add(new PasswordData("Amazon","women@something.com","anything"));
+        data.add(new PasswordData("Github.com","fakename@gmail.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Google","coolname@gmail.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Google","whoever@whatever.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Netflix","who@anything.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Protonmail","fake@original.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Amazon.com","9988776655","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Amazon.com","me@whatever.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Netflix","people@company.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Netflix","man@enterprise.com","efH_kodp59?>_sd"));
+        data.add(new PasswordData("Amazon","women@something.com","efH_kodp59?>_sd"));
 
 
+        // recycler view adapter and layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(linearLayoutManager);
-        adapter = new PasswordAdapter(getContext(), data);
+        adapter = new PasswordAdapter(getContext(), data, getFragmentManager());
         recyclerView.setAdapter(adapter);
 
-        // edit text for filtering the list
+        // edit text for filtering the list according to user's search
         editTextSearchPasswords.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
