@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -54,7 +55,7 @@ public class RetrievePasswordFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_retreive_passwords, container, false);
+        final View view = inflater.inflate(R.layout.fragment_retreive_passwords, container, false);
 
         reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
@@ -100,6 +101,30 @@ public class RetrievePasswordFragment extends Fragment {
                 filterResult(s.toString().toLowerCase());
             }
         });
+
+        // deletion of password entry --> swipe left
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+
+                String key = (String) viewHolder.itemView.getTag();
+                // delete the entry from firestore
+                reference.document(key).delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getContext(), "Delete!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        }).attachToRecyclerView(recyclerView);
 
         return view;
     }

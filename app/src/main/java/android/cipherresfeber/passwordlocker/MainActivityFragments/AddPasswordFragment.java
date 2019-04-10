@@ -78,7 +78,7 @@ public class AddPasswordFragment extends Fragment {
                         Log.i("Add Password Fragment", e.getMessage());
                     }
                 });
-                
+
             }
         });
 

@@ -58,6 +58,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
         final PasswordData data = list.get(i);
         passwordViewHolder.txvServiceProviderName.setText(data.getServiceProvider());
         passwordViewHolder.txvLoginId.setText(data.getLoginId());
+        passwordViewHolder.itemView.setTag(data.getFirebaseKey());
 
         passwordViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
