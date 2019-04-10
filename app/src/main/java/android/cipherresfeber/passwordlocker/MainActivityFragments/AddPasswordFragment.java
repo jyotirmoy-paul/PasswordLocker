@@ -1,5 +1,6 @@
 package android.cipherresfeber.passwordlocker.MainActivityFragments;
 
+import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
@@ -17,20 +18,23 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddPasswordFragment extends Fragment {
 
-    DatabaseReference reference;
+    DocumentReference reference;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_passwords, container, false);
 
-        reference = FirebaseDatabase.getInstance().getReference().child("password_data")
-                .child("user_uid").push();
+        reference = FirebaseFirestore.getInstance()
+                .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
+                .document("user_uid")
+                .collection(DatabaseConstants.DATABASE_USER_PASSWORD)
+                .document();
 
         final EditText editTextServiceProvider = view.findViewById(R.id.etServiceProvider);
         final EditText editTextLoginId = view.findViewById(R.id.etLoginId);
@@ -46,7 +50,7 @@ public class AddPasswordFragment extends Fragment {
                 String loginId = editTextLoginId.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
                 String encryptionPassword = editTextEncryptionPassword.getText().toString().trim();
-                String firebaseKey = reference.getKey();
+                String firebaseKey = reference.getId();
 
                 // encrypt the password and store to the firebase database
                 try {
@@ -59,7 +63,7 @@ public class AddPasswordFragment extends Fragment {
 
                 PasswordData data = new PasswordData(serviceProvider, loginId, password, firebaseKey);
 
-                reference.setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                reference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // password addition successful
@@ -74,9 +78,7 @@ public class AddPasswordFragment extends Fragment {
                         Log.i("Add Password Fragment", e.getMessage());
                     }
                 });
-
-
-
+                
             }
         });
 

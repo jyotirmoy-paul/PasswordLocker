@@ -64,7 +64,7 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
 
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
-                if(false && decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
+                if(decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
                     editTextDecryptionPassword.setError("Invalid Length");
                     editTextDecryptionPassword.requestFocus();
                     return;

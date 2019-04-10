@@ -1,29 +1,40 @@
 package android.cipherresfeber.passwordlocker.MainActivityFragments;
 
 import android.cipherresfeber.passwordlocker.Adapters.PasswordAdapter;
+import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
+import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.SupportActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 
@@ -37,12 +48,18 @@ public class RetrievePasswordFragment extends Fragment {
     PasswordAdapter adapter;
     ArrayList<PasswordData> passwordList;
 
-    DatabaseReference reference;
+    CollectionReference reference;
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_retreive_passwords, container, false);
+
+        reference = FirebaseFirestore.getInstance()
+                .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
+                .document("user_uid")
+                .collection(DatabaseConstants.DATABASE_USER_PASSWORD);
 
         // referencing to the views
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -52,37 +69,17 @@ public class RetrievePasswordFragment extends Fragment {
 
         passwordList = new ArrayList<>();
 
-        // TODO: populate the passwordList from firebase database
-        reference = FirebaseDatabase.getInstance().getReference()
-                .child("password_data").child("user_uid");
-        reference.addChildEventListener(new ChildEventListener() {
+        // get all the data for the first time
+        reference.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                PasswordData passwordData = dataSnapshot.getValue(PasswordData.class);
-                passwordList.add(passwordData);
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for(DocumentSnapshot ds: queryDocumentSnapshots){
+                    passwordList.add(ds.toObject(PasswordData.class));
+                }
                 adapter.notifyDataSetChanged();
             }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
         });
+
 
         // recycler view adapter and layout manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -120,4 +117,46 @@ public class RetrievePasswordFragment extends Fragment {
         adapter.filterList(filteredList);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        reference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable QuerySnapshot queryDocumentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if(e != null){
+                    Log.i("Main Activity", e.getMessage());;
+                    return;
+                }
+
+                for(DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()){
+                    DocumentSnapshot documentSnapshot = dc.getDocument();
+
+                    String id = documentSnapshot.getId();
+                    int oldIndex = dc.getOldIndex();
+                    int newIndex = dc.getNewIndex();
+
+                    if(newIndex == -1){
+                        // old document deleted
+                        for(int i=0; i<passwordList.size(); i++){
+                            if(id.equals(passwordList.get(i).getFirebaseKey())){
+                                passwordList.remove(i);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            }
+                        }
+                    } else if(oldIndex != -1){
+                        // modification occurred
+                        for(int i=0; i<passwordList.size(); i++){
+                            if(id.equals(passwordList.get(i).getFirebaseKey())){
+                                passwordList.set(i, documentSnapshot.toObject(PasswordData.class));
+                                adapter.notifyDataSetChanged();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
