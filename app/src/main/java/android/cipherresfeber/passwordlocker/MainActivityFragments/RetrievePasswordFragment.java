@@ -120,6 +120,7 @@ public class RetrievePasswordFragment extends Fragment {
                     // left slide ---> ask the user for confirmation deletion of entry
                     new AlertDialog.Builder(getContext())
                             .setTitle("Delete Password Entry?")
+                            .setCancelable(false)
                             .setMessage("Are you sure you want to delete this password entry?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/dialogBoxParentLayout"
+    android:background="@color/lightRed"
     android:padding="10dp"
-    android:gravity="center_horizontal"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <LinearLayout
+        android:gravity="center"
+        android:id="@+id/decryptPasswordContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_open_lock"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+
+        <TextView
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:id="@+id/txvLableDecryptPassword"
+            android:layout_centerHorizontal="true"
+            android:text="Decrypt Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/decryptPasswordContainer"
+        android:id="@+id/txvLableServiceProvider"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="13sp"
+        android:text="Service Provider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
    <TextView
-       android:layout_centerHorizontal="true"
+       android:layout_below="@+id/txvLableServiceProvider"
        android:id="@+id/txvServiceProviderName"
-       android:textColor="#000"
+       android:textColor="@color/colorPrimaryDark"
        android:textStyle="bold"
        android:textSize="20sp"
        android:text="Github.com"
@@ -17,53 +54,87 @@
        android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/txvServiceProviderName"
-        android:id="@+id/txvLoginId"
-        android:textColor="#000"
-        android:textSize="17sp"
         android:layout_marginTop="10dp"
+        android:layout_below="@+id/txvServiceProviderName"
+        android:id="@+id/txvLableLoginId"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="13sp"
+        android:text="Login Id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_below="@+id/txvLableLoginId"
+        android:id="@+id/txvLoginId"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17sp"
         android:text="something@company.com"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/txvLoginId"
+        android:id="@+id/txvLablePassword"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="13sp"
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/txvLablePassword"
         android:id="@+id/txvPassword"
-        android:textColor="@android:color/holo_red_light"
+        android:textColor="#ff0000"
         android:textSize="17sp"
-        android:layout_marginTop="5dp"
         android:text="c_ldk?ecropck124:a87ec9/"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:layout_marginStart="20dp"
+        android:layout_below="@+id/txvLablePassword"
+        android:layout_toRightOf="@+id/txvPassword"
         android:visibility="gone"
         android:id="@+id/imvCopyContent"
-        android:layout_alignParentEnd="true"
         android:src="@drawable/ic_copy_content"
-        android:layout_width="30dp"
-        android:layout_height="30dp" />
+        android:layout_width="25dp"
+        android:layout_height="25dp" />
 
-    <EditText
+    <LinearLayout
+        android:gravity="center_vertical"
         android:layout_below="@+id/txvPassword"
-        android:id="@+id/etDecryptionPassword"
-        android:textColor="#000"
-        android:hint="Decryption Password"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
-    <Button
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/etDecryptionPassword"
-        android:textSize="17sp"
-        android:id="@+id/btnDecryptPassword"
-        android:layout_marginTop="5dp"
-        android:text="decrypt password"
-        android:layout_marginBottom="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:gravity="center_vertical"
+            android:background="#fff"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:layout_weight="1"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:id="@+id/etDecryptionPassword"
+            android:textColor="#000"
+            android:hint="Decryption Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/btnDecryptPassword"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
 
 </RelativeLayout>
