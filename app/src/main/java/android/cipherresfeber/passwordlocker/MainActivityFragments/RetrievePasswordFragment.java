@@ -5,11 +5,14 @@ import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
+import android.content.ClipData;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.SupportActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -104,24 +107,56 @@ public class RetrievePasswordFragment extends Fragment {
 
         // deletion of password entry --> swipe left
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT) {
+                ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder viewHolder1) {
                 return false;
             }
 
             @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+            public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int i) {
 
-                String key = (String) viewHolder.itemView.getTag();
-                // delete the entry from firestore
-                reference.document(key).delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getContext(), "Delete!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if(i == ItemTouchHelper.LEFT){
+                    // left slide ---> ask the user for confirmation deletion of entry
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Delete Password Entry?")
+                            .setMessage("Are you sure you want to delete this password entry?")
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String key = (String) viewHolder.itemView.getTag();
+                                    reference.document(key).delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getContext(), "Item Removed", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(getContext(),
+                                                    "Oops! Couldn't delete", Toast.LENGTH_SHORT).show();
+                                            adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                                        }
+                                    });
+                                }
+                            })
+                            .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // restore the removed password back to the list
+                                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                                }
+                            })
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .show();
+
+
+                } else{
+                    // edit the entry ---> using an bottom sheet
+                    // TODO: use bottom sheet for editing the password of the field
+
+                    adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                }
 
             }
         }).attachToRecyclerView(recyclerView);
