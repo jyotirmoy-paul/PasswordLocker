@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,13 +36,15 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
 
         TextView txvServiceProviderName;
         TextView txvLoginId;
-        LinearLayout parentLayout;
+        RelativeLayout parentLayout;
+        TextView txvLastUpdatedDate;
 
         public PasswordViewHolder(@NonNull View itemView) {
             super(itemView);
             txvServiceProviderName = itemView.findViewById(R.id.txvServiceProviderName);
             txvLoginId = itemView.findViewById(R.id.txvLoginId);
             parentLayout = itemView.findViewById(R.id.parentLayoutPasswordItem);
+            txvLastUpdatedDate = itemView.findViewById(R.id.txvLastUpdatedDate);
         }
     }
 
@@ -59,6 +62,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
         passwordViewHolder.txvServiceProviderName.setText(data.getServiceProvider());
         passwordViewHolder.txvLoginId.setText(data.getLoginId());
         passwordViewHolder.itemView.setTag(data.getFirebaseKey());
+        passwordViewHolder.txvLastUpdatedDate.setText(data.getLastUpdatedDate());
 
         passwordViewHolder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override

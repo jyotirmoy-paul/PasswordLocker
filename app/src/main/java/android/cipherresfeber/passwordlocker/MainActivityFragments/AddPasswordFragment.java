@@ -18,12 +18,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddPasswordFragment extends Fragment {
 
-    DocumentReference reference;
+    CollectionReference reference;
 
     @Nullable
     @Override
@@ -33,8 +38,7 @@ public class AddPasswordFragment extends Fragment {
         reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
                 .document("user_uid")
-                .collection(DatabaseConstants.DATABASE_USER_PASSWORD)
-                .document();
+                .collection(DatabaseConstants.DATABASE_USER_PASSWORD);
 
         final EditText editTextServiceProvider = view.findViewById(R.id.etServiceProvider);
         final EditText editTextLoginId = view.findViewById(R.id.etLoginId);
@@ -46,11 +50,14 @@ public class AddPasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                // every time create a new key
+                DocumentReference ref = reference.document();
+
                 String serviceProvider = editTextServiceProvider.getText().toString().trim();
                 String loginId = editTextLoginId.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
                 String encryptionPassword = editTextEncryptionPassword.getText().toString().trim();
-                String firebaseKey = reference.getId();
+                String firebaseKey = ref.getId();
 
                 // encrypt the password and store to the firebase database
                 try {
@@ -61,9 +68,11 @@ public class AddPasswordFragment extends Fragment {
                     Toast.makeText(getContext(), "Could not encrypt!", Toast.LENGTH_SHORT).show();
                 }
 
-                PasswordData data = new PasswordData(serviceProvider, loginId, password, firebaseKey);
+                DateFormat dateFormat = new SimpleDateFormat("dd MMM yy");
 
-                reference.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                PasswordData data = new PasswordData(serviceProvider, loginId, password, firebaseKey, dateFormat.format(new Date()));
+
+                ref.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // password addition successful
