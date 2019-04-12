@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
 
     private String encryptedPassword;
@@ -55,13 +57,13 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
         final TextView textViewPassword = view.findViewById(R.id.txvPassword);
         final EditText editTextDecryptionPassword = view.findViewById(R.id.etDecryptionPassword);
         final ImageView imageViewCopyPassword = view.findViewById(R.id.imvCopyContent);
-        final RelativeLayout dialogBoxParentLayout = view.findViewById(R.id.dialogBoxParentLayout);
+        final TextView headingOfBottomSheet = view.findViewById(R.id.lableHeading);
         ImageView btnDecryptPassword = view.findViewById(R.id.btnDecryptPassword);
 
 
         textViewServiceProviderName.setText(serviceProvider);
         textViewLoginId.setText(id);
-        textViewPassword.setText(encryptedPassword);
+        textViewPassword.setText(encryptedPassword.trim());
 
         btnDecryptPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,8 +82,8 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
                     decryptedPassword = AESCryptography.decrypt(encryptedPassword);
 
                     textViewPassword.setText(decryptedPassword);
-                    textViewPassword.setTextColor(getResources().getColor(R.color.deepGreen));
-                    dialogBoxParentLayout.setBackgroundColor(getResources().getColor(R.color.lightGreen));
+                    headingOfBottomSheet.setText("-- Decryption Successfull --");
+                    textViewPassword.setTextColor(getResources().getColor(R.color.colorAccent));
 
                     // allowing copying of password only if password retrieval is successful
                     imageViewCopyPassword.setVisibility(View.VISIBLE);
