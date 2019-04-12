@@ -1,9 +1,12 @@
 package android.cipherresfeber.passwordlocker.MainActivityFragments;
 
+import android.app.ProgressDialog;
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
+import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,11 +38,17 @@ import java.util.Date;
 public class AddPasswordFragment extends Fragment {
 
     CollectionReference reference;
+    String userSetEncryptionKey;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_passwords, container, false);
+
+        userSetEncryptionKey = getContext()
+                .getSharedPreferences(UserConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
+                .getString(UserConstants.USER_ENCRYPTION_PASS_CODE, "tempPass");
+
 
         reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
@@ -57,7 +66,7 @@ public class AddPasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                // every time create a new key
+                // every time create a new database key
                 DocumentReference ref = reference.document();
 
                 String serviceProvider = editTextServiceProvider.getText().toString().trim();
@@ -65,33 +74,68 @@ public class AddPasswordFragment extends Fragment {
                 String password = editTextPassword.getText().toString().trim();
                 String firebaseKey = ref.getId();
 
+                // check for invalid data entry
+                if(serviceProvider.length() < 2 || serviceProvider.length() > 30){
+                    editTextServiceProvider.setError("Length 2 - 30 only");
+                    editTextServiceProvider.requestFocus();
+                    return;
+                }
+
+                if(loginId.isEmpty()){
+                    editTextLoginId.setError("Use a Login ID");
+                    editTextLoginId.requestFocus();
+                    return;
+                }
+
+                if(password.isEmpty()) {
+                    editTextPassword.setError("Password can't be empty");
+                    editTextPassword.requestFocus();
+                    return;
+                }
+
                 // encrypt the password and store to the firebase database
                 try {
-                    String encryptionPassword = "tempPass"; // TODO: get the user set value
+                    String encryptionPassword = userSetEncryptionKey;
                     AESCryptography.setKey(modifyUserPassword(encryptionPassword));
                     password = AESCryptography.encrypt(password);
 
                 } catch (Exception e){
-                    Toast.makeText(getContext(), "Could not encrypt!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                    Log.i("Main Activity", e.getMessage());
                 }
 
                 DateFormat dateFormat = new SimpleDateFormat("dd MMM yy");
-
                 PasswordData data = new PasswordData(serviceProvider, loginId, password, firebaseKey, dateFormat.format(new Date()));
+
+                final ProgressDialog pd = new ProgressDialog(getContext());
+                pd.setTitle("Please Wait");
+                pd.setMessage("Uploading Data...");
+                pd.setCancelable(false);
+                pd.setCanceledOnTouchOutside(false);
+                pd.show();
 
                 ref.set(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // password addition successful
-                        Toast.makeText(getContext(), "Added Successfully!", Toast.LENGTH_SHORT).show();
+
+                        // clear all the editText entries
+                        editTextLoginId.setText("");
+                        editTextPassword.setText("");
+                        editTextServiceProvider.setText("");
+
+                        // dismiss the progress dialog
+                        pd.dismiss();
+
+                        Toast.makeText(getContext(),"Entry Added", Toast.LENGTH_SHORT).show();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // password addition failed
-                        Toast.makeText(getContext(), "Failed!", Toast.LENGTH_SHORT).show();
-                        Log.i("Add Password Fragment", e.getMessage());
+                        Toast.makeText(getContext(), "Oops! Something went wrong, try again later", Toast.LENGTH_SHORT).show();
+                        Log.i("Main Activity", e.getMessage());
+                        pd.dismiss();
                     }
                 });
 

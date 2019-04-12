@@ -76,7 +76,7 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
                     decryptedPassword = AESCryptography.decrypt(encryptedPassword);
 
                     textViewPassword.setText(decryptedPassword);
-                    headingOfBottomSheet.setText("-- Decryption Successfull --");
+                    headingOfBottomSheet.setText("-- Decrypted --");
                     textViewPassword.setTextColor(getResources().getColor(R.color.colorAccent));
 
                     // allowing copying of password only if password retrieval is successful
