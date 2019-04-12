@@ -1,6 +1,7 @@
 package android.cipherresfeber.passwordlocker.MainActivityFragments;
 
 import android.cipherresfeber.passwordlocker.Adapters.PasswordAdapter;
+import android.cipherresfeber.passwordlocker.BottomSheetFragment.EditBottomSheetFragment;
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.R;
@@ -154,7 +155,25 @@ public class RetrievePasswordFragment extends Fragment {
 
                 } else{
                     // edit the entry ---> using an bottom sheet
-                    // TODO: use bottom sheet for editing the password of the field
+
+                    EditBottomSheetFragment bottomSheet = new EditBottomSheetFragment();
+
+                    String key = (String) viewHolder.itemView.getTag();
+                    // search for the key in the list
+                    for(PasswordData pd: passwordList){
+                        String tempKey = pd.getFirebaseKey();
+                        if(key.equals(tempKey)){
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString(DatabaseConstants.SERVICE_PROVIDER_NAME, pd.getServiceProvider());
+                            bundle.putString(DatabaseConstants.LOGIN_ID, pd.getLoginId());
+                            bundle.putString(DatabaseConstants.DATABASE_KEY, pd.getFirebaseKey());
+
+                            bottomSheet.setArguments(bundle);
+                            bottomSheet.show(getFragmentManager(), "EditBottomSheetDialog");
+
+                        }
+                    }
 
                     adapter.notifyItemChanged(viewHolder.getAdapterPosition());
                 }

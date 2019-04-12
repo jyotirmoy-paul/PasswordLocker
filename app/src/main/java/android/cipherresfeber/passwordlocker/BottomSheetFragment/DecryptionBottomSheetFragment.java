@@ -17,13 +17,10 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
+public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
 
     private String encryptedPassword;
     private String decryptedPassword;
@@ -31,10 +28,7 @@ public class PasswordBottomSheetFragment extends BottomSheetDialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.bottom_sheet_layout, container, false);
-
-        getDialog().getWindow()
-                .setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        View view = inflater.inflate(R.layout.decryption_bottom_sheet_layout, container, false);
 
         String serviceProvider;
         String id;

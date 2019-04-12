@@ -1,20 +1,17 @@
 package android.cipherresfeber.passwordlocker.Adapters;
 
-import android.cipherresfeber.passwordlocker.BottomSheetFragment.PasswordBottomSheetFragment;
+import android.cipherresfeber.passwordlocker.BottomSheetFragment.DecryptionBottomSheetFragment;
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,7 +66,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
             @Override
             public void onClick(View v) {
                 // open the bottom sheet
-                PasswordBottomSheetFragment bottomSheet = new PasswordBottomSheetFragment();
+                DecryptionBottomSheetFragment bottomSheet = new DecryptionBottomSheetFragment();
 
                 // using bundle to pass the service provider, login id and password info
                 Bundle bundle = new Bundle();
@@ -78,7 +75,7 @@ public class PasswordAdapter extends RecyclerView.Adapter<PasswordAdapter.Passwo
                 bundle.putString(DatabaseConstants.PASSWORD, data.getPassword());
 
                 bottomSheet.setArguments(bundle);
-                bottomSheet.show(fragmentManager, "passwordBottomSheetDialog");
+                bottomSheet.show(fragmentManager, "DecryptionBottomSheetDialog");
             }
         });
     }

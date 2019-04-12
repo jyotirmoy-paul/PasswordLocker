@@ -43,7 +43,6 @@ public class AddPasswordFragment extends Fragment {
         final EditText editTextServiceProvider = view.findViewById(R.id.etServiceProvider);
         final EditText editTextLoginId = view.findViewById(R.id.etLoginId);
         final EditText editTextPassword = view.findViewById(R.id.etPassword);
-        final EditText editTextEncryptionPassword = view.findViewById(R.id.etEncryptionPassword);
         Button buttonEncryptAndSave = view.findViewById(R.id.btnEncryptAndSave);
 
         buttonEncryptAndSave.setOnClickListener(new View.OnClickListener() {
@@ -56,11 +55,11 @@ public class AddPasswordFragment extends Fragment {
                 String serviceProvider = editTextServiceProvider.getText().toString().trim();
                 String loginId = editTextLoginId.getText().toString().trim();
                 String password = editTextPassword.getText().toString().trim();
-                String encryptionPassword = editTextEncryptionPassword.getText().toString().trim();
                 String firebaseKey = ref.getId();
 
                 // encrypt the password and store to the firebase database
                 try {
+                    String encryptionPassword = "tempPass"; // TODO: get the user set value
                     AESCryptography.setKey(modifyUserPassword(encryptionPassword));
                     password = AESCryptography.encrypt(password);
 

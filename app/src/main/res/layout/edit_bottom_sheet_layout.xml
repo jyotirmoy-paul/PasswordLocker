@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/lableHeading"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"
+        android:text="Update your Password Info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@+id/lableHeading"
+        android:id="@+id/txvLableServiceProvider"
+        android:textSize="13sp"
+        android:text="Service Provider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@+id/txvLableServiceProvider"
+        android:id="@+id/txvServiceProviderName"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:text="Github.com"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txvServiceProviderName"
+        android:id="@+id/txvLableLoginId"
+        android:textSize="13sp"
+        android:text="Login Id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_below="@+id/txvLableLoginId"
+        android:id="@+id/txvLoginId"
+        android:textColor="#000"
+        android:textSize="17sp"
+        android:text="something@company.com"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/txvLoginId"
+        android:id="@+id/txvLablePassword"
+        android:textSize="13sp"
+        android:text="Password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/passwordInputContainer"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/txvLablePassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_marginEnd="5dp"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:gravity="center_vertical"
+            android:background="#fff"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:layout_weight="1"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:id="@+id/etNewPassword"
+            android:textColor="#000"
+            android:hint="New Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imvNewShowPassword"
+            android:src="@drawable/ic_show_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/passwordInputContainer"
+        android:id="@+id/txvDecryptionLabel"
+        android:textSize="13sp"
+        android:text="Confirm It's you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/confimUser"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/txvDecryptionLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_marginEnd="5dp"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textSize="17sp"
+            android:gravity="center_vertical"
+            android:background="#fff"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:layout_weight="1"
+            android:scrollHorizontally="true"
+            android:maxLines="1"
+            android:id="@+id/etDecryptionPassword"
+            android:textColor="#000"
+            android:hint="Enter Your Decryption Password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imvDecryptionShowPassword"
+            android:src="@drawable/ic_show_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/btnUpdatePassword"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/ic_next"
+            android:layout_width="30dp"
+            android:layout_height="30dp" />
+    </LinearLayout>
+
+</RelativeLayout>

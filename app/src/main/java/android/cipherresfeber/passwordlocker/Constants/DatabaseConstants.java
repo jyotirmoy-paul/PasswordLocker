@@ -7,4 +7,5 @@ public class DatabaseConstants {
     public static final String SOMETHING_WENT_WRONG = "something_went_wrong";
     public static final String DATABASE_PASSWORD_COLLECTION = "password_collections";
     public static final String DATABASE_USER_PASSWORD = "user_passwords";
+    public static final String DATABASE_KEY = "firebase_key";
 }
