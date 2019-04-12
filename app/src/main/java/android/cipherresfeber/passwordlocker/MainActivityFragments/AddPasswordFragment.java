@@ -4,16 +4,22 @@ import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +49,8 @@ public class AddPasswordFragment extends Fragment {
         final EditText editTextServiceProvider = view.findViewById(R.id.etServiceProvider);
         final EditText editTextLoginId = view.findViewById(R.id.etLoginId);
         final EditText editTextPassword = view.findViewById(R.id.etPassword);
+        final TextView textViewLablePassword = view.findViewById(R.id.txvLablePassword);
+        final ImageView imageViewShowPassword = view.findViewById(R.id.imvShowPassword);
         Button buttonEncryptAndSave = view.findViewById(R.id.btnEncryptAndSave);
 
         buttonEncryptAndSave.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +95,43 @@ public class AddPasswordFragment extends Fragment {
                     }
                 });
 
+            }
+        });
+
+        // let user know that their password is in safer hands, with end to end encryption, no middle
+        // man can read any passwords
+        textViewLablePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userInfoDisplay = "Your entered password is encrypted using AES Algorithm with a key" +
+                        " (set by you at login time) and without the key no one can decrypt your password." +
+                        "\nRest assure, your password will be in good hand.";
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle("AES Encryption")
+                        .setMessage(userInfoDisplay)
+                        .setPositiveButton(android.R.string.yes,null)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setCancelable(false)
+                        .show();
+
+            }
+        });
+
+        // show / hide password in password edit text
+        imageViewShowPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // if already hidden, show password else vice versa
+                if(editTextPassword.getTransformationMethod() == HideReturnsTransformationMethod.getInstance()){
+                    editTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else{
+                    editTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+
+                // finally set the selection to the end
+                editTextPassword.setSelection(editTextPassword.getText().length());
             }
         });
 
