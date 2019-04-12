@@ -4,10 +4,14 @@ import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +48,44 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
 
         final EditText editTextNewPassword = view.findViewById(R.id.etNewPassword);
         final EditText editTextDecryptionPassword = view.findViewById(R.id.etDecryptionPassword);
+
+        // eye button for showing password
+        ImageView imageViewNewPasswordShow = view.findViewById(R.id.imvNewShowPassword);
+        imageViewNewPasswordShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // if already hidden, show password else vice versa
+                if(editTextNewPassword.getTransformationMethod() == HideReturnsTransformationMethod.getInstance()){
+                    editTextNewPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else{
+                    editTextNewPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+
+                // finally set the selection to the end
+                editTextNewPassword.setSelection(editTextNewPassword.getText().length());
+
+
+            }
+        });
+
+        ImageView imageViewDecryptionPasswordShow = view.findViewById(R.id.imvDecryptionShowPassword);
+        imageViewDecryptionPasswordShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // if already hidden, show password else vice versa
+                if(editTextDecryptionPassword.getTransformationMethod() == HideReturnsTransformationMethod.getInstance()){
+                    editTextDecryptionPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                } else{
+                    editTextDecryptionPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                }
+
+                // finally set the selection to the end
+                editTextDecryptionPassword.setSelection(editTextDecryptionPassword.getText().length());
+
+            }
+        });
 
         Bundle bundle = getArguments();
         if(bundle == null){
