@@ -31,7 +31,7 @@
         android:textColor="#000"
         android:textSize="17sp"
         android:text="Github.com"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -49,7 +49,7 @@
         android:textColor="#000"
         android:textSize="17sp"
         android:text="something@company.com"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
@@ -62,14 +62,15 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:gravity="start"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
         android:layout_below="@+id/txvLablePassword"
         android:id="@+id/txvPassword"
         android:textColor="#ff0000"
         android:textSize="17sp"
-        android:text="c_ldk?ecropck124:a87ec9/"
-        android:layout_width="wrap_content"
+        android:text="iu6+hEHCe1VV8YPjqbnvwrHa1SFenDybWxGnHpe/WeA="
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ImageView

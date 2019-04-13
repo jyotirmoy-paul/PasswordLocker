@@ -114,7 +114,6 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
             clipboard.setPrimaryClip(clip);
             Toast.makeText(getContext(), "Password Copied. Use it within 20 seconds!", Toast.LENGTH_SHORT).show();
 
-            // 
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                @Override

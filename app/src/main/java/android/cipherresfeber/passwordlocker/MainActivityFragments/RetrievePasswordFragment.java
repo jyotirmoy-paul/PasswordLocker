@@ -29,6 +29,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -55,15 +56,18 @@ public class RetrievePasswordFragment extends Fragment {
 
     CollectionReference reference;
 
+    String userUid;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_retreive_passwords, container, false);
 
+        userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
-                .document("user_uid")
+                .document(userUid)
                 .collection(DatabaseConstants.DATABASE_USER_PASSWORD);
 
         // referencing to the views

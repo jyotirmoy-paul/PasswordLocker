@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -101,10 +102,12 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
         textViewServiceProviderName.setText(serviceProvider);
         textViewLoginId.setText(loginId);
 
+        String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
         // reference to the firestore for updating data
         final DocumentReference reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
-                .document("user_uid")
+                .document(userUid)
                 .collection(DatabaseConstants.DATABASE_USER_PASSWORD).document(key);
 
         btnUpdatePassword.setOnClickListener(new View.OnClickListener() {
@@ -113,6 +116,18 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
 
                 String newPassword = editTextNewPassword.getText().toString().trim();
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
+
+                if(newPassword.isEmpty()){
+                    editTextNewPassword.setError("Can't be empty!");
+                    editTextNewPassword.requestFocus();
+                    return;
+                }
+
+                if(decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
+                    editTextDecryptionPassword.setError("Invalid Length");
+                    editTextDecryptionPassword.requestFocus();
+                    return;
+                }
 
                 // TODO: check for the decryption password and take decision accordingly
 

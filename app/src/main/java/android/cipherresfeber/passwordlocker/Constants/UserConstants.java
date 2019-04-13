@@ -6,4 +6,5 @@ public class UserConstants {
     public static final String USER_PHONE_NUMBER = "user_phone_number";
     public static final String USER_ENTRY_PASS_CODE = "user_entry_pass_code";
     public static final String USER_ENCRYPTION_PASS_CODE = "user_encryption_pass_code";
+    public static final String USER_GENERATED_OTP = "registration_otp";
 }

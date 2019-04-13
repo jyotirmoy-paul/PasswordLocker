@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -39,11 +40,14 @@ public class AddPasswordFragment extends Fragment {
 
     CollectionReference reference;
     String userSetEncryptionKey;
+    String userUid;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_add_passwords, container, false);
+
+        userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         userSetEncryptionKey = getContext()
                 .getSharedPreferences(UserConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -52,7 +56,7 @@ public class AddPasswordFragment extends Fragment {
 
         reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
-                .document("user_uid")
+                .document(userUid)
                 .collection(DatabaseConstants.DATABASE_USER_PASSWORD);
 
         final EditText editTextServiceProvider = view.findViewById(R.id.etServiceProvider);
@@ -126,7 +130,7 @@ public class AddPasswordFragment extends Fragment {
                         // dismiss the progress dialog
                         pd.dismiss();
 
-                        Toast.makeText(getContext(),"Entry Added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"Password Added", Toast.LENGTH_SHORT).show();
 
                     }
                 }).addOnFailureListener(new OnFailureListener() {
