@@ -7,6 +7,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialogFragment;
@@ -108,10 +109,20 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+            final ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("password", decryptedPassword);
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(getContext(), "Password Copied", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Password Copied. Use it within 20 seconds!", Toast.LENGTH_SHORT).show();
+
+            // 
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+               @Override
+               public void run() {
+                   ClipData emptyClip = ClipData.newPlainText("empty-password", "-- expired --");
+                   clipboard.setPrimaryClip(emptyClip);
+               }
+            }, 20*1000); // invoke run method after 20 seconds
         }
     };
 
