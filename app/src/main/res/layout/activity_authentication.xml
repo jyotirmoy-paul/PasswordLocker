@@ -11,11 +11,11 @@
 
     <!-- General Screen Layout -->
     <LinearLayout
+        android:id="@+id/linearLayoutGeneral"
         android:background="#fff"
         android:gravity="center"
-        android:visibility="visible"
+        android:visibility="gone"
         android:orientation="vertical"
-        android:id="@+id/linearLayoutFirstTime"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -181,9 +181,9 @@
 
     <!-- First time Screen Layout -->
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:orientation="vertical"
-        android:id="@+id/linearLayoutGeneral"
+        android:id="@+id/linearLayoutFirst"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
