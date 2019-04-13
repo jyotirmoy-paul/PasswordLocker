@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    android:padding="5dp"
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -9,18 +8,185 @@
     android:layout_height="match_parent"
     tools:context=".AuthenticationActivity">
 
-    <EditText
-        android:inputType="numberPassword"
-        android:id="@+id/etEnterPin"
-        android:hint="Enter Your PIN"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
-    <Button
-        android:layout_marginTop="10dp"
-        android:id="@+id/btnCheckPin"
-        android:text="GO"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <!-- General Screen Layout -->
+    <LinearLayout
+        android:background="#fff"
+        android:gravity="center"
+        android:visibility="visible"
+        android:orientation="vertical"
+        android:id="@+id/linearLayoutFirstTime"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:textSize="27sp"
+            android:text="Enter Locker PIN"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginTop="30dp"
+            android:src="@drawable/app_lock"
+            android:layout_width="200dp"
+            android:layout_height="200dp" />
+
+        <GridLayout
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/viewFirstCircle"
+                android:layout_marginEnd="15dp"
+                android:layout_height="25dp"
+                android:layout_width="25dp"
+                android:background="@drawable/white_circular_bg" />
+
+            <View
+                android:id="@+id/viewSecondCircle"
+                android:layout_marginEnd="15dp"
+                android:layout_height="25dp"
+                android:layout_width="25dp"
+                android:background="@drawable/white_circular_bg" />
+
+            <View
+                android:id="@+id/viewThirdCircle"
+                android:layout_marginEnd="15dp"
+                android:layout_height="25dp"
+                android:layout_width="25dp"
+                android:background="@drawable/white_circular_bg" />
+
+            <View
+                android:id="@+id/viewFourthCircle"
+                android:layout_height="25dp"
+                android:layout_width="25dp"
+                android:background="@drawable/white_circular_bg" />
+
+        </GridLayout>
+
+        <GridLayout
+            android:orientation="horizontal"
+            android:columnCount="3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="1" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="2" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="3" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="4" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="5" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="6" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="7" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="8" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="9" />
+
+            <Button
+                android:onClick="numberButton"
+                android:textStyle="bold"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="&#8592;" />
+
+            <Button
+                android:onClick="numberButton"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_margin="7dp"
+                android:textColor="#000"
+                android:background="#fff"
+                android:textSize="30sp"
+                android:text="0" />
+
+
+        </GridLayout>
+
+    </LinearLayout>
+
+    <!-- First time Screen Layout -->
+    <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:id="@+id/linearLayoutGeneral"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </LinearLayout>
 
 </LinearLayout>
