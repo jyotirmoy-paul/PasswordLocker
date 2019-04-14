@@ -11,6 +11,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -32,6 +34,7 @@ public class AuthenticationActivity extends AppCompatActivity implements Initial
     private View thirdCircle;
     private View fourthCircle;
 
+    private TextView textViewEntryPasscodeStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +49,7 @@ public class AuthenticationActivity extends AppCompatActivity implements Initial
 
         LinearLayout parentLayoutFirstTime = findViewById(R.id.linearLayoutFirst);
         LinearLayout parentLayoutGeneralTime = findViewById(R.id.linearLayoutGeneral);
+        textViewEntryPasscodeStatus = findViewById(R.id.txvEntryPasscodeStatus);
 
         if(savedPassCode.equals(UserConstants.DEFAULT_ENTRY_PASS_CODE)){
             // first time open
@@ -108,9 +112,7 @@ public class AuthenticationActivity extends AppCompatActivity implements Initial
                 pinCodeCounter++;
                 userEnteredCode += buttonText;
             }
-
         }
-
 
         // fill the view accordingly
         if(pinCodeCounter == 0){
@@ -149,8 +151,26 @@ public class AuthenticationActivity extends AppCompatActivity implements Initial
             fourthCircle.setBackgroundResource(R.drawable.black_circular_bg);
 
             if(savedPassCode.equals(userEnteredCode)){
+                textViewEntryPasscodeStatus.setVisibility(View.INVISIBLE);
                 startActivity(new Intent(AuthenticationActivity.this, MainActivity.class));
                 AuthenticationActivity.this.finish();
+            } else{
+                // show an shake animation notifying the use about wrong passcode
+                Animation animation = AnimationUtils.loadAnimation(AuthenticationActivity.this,
+                        R.anim.shake);
+                textViewEntryPasscodeStatus.startAnimation(animation);
+                textViewEntryPasscodeStatus.setVisibility(View.VISIBLE);
+                textViewEntryPasscodeStatus.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        userEnteredCode = "";
+                        pinCodeCounter = 0;
+                        firstCircle.setBackgroundResource(R.drawable.white_circular_bg);
+                        secondCircle.setBackgroundResource(R.drawable.white_circular_bg);
+                        thirdCircle.setBackgroundResource(R.drawable.white_circular_bg);
+                        fourthCircle.setBackgroundResource(R.drawable.white_circular_bg);
+                    }
+                }, 100);
             }
 
         }

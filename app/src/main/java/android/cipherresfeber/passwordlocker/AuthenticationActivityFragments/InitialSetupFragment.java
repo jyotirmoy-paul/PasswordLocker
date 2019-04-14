@@ -51,6 +51,61 @@ public class InitialSetupFragment extends Fragment {
 
         ImageView btnContinue = view.findViewById(R.id.btnContinue);
 
+        // display info about lock pin
+        textViewInfoAboutLockPin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userMessage =
+                        "Lock Pin is a 4 digit pin used to login to the app. " +
+                        "This is the first line of defense against intruders." +
+                        "\n" +
+                        "Use a memorable but hard to guess PIN.";
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Lock Pin Info")
+                        .setMessage(userMessage)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(getContext(), MainActivity.class));
+                                getActivity().finish();
+                            }
+                        })
+                        .show();
+            }
+        });
+
+        // display info about decryption password
+        textViewInfoAboutDecryptionPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String userMessage =
+                        "Decryption/Encryption Password is used to decrypt/encrypt your saved passwords. " +
+                        "So that even if an attacker manages to get data from our server, he/she won't " +
+                        "be able to decrypt them." +
+                        "\n" +
+                        "Use a memorable but hard to guess decryption/encryption password.";
+
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Decryption Password Info")
+                        .setMessage(userMessage)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(getContext(), MainActivity.class));
+                                getActivity().finish();
+                            }
+                        })
+                        .show();
+            }
+        });
+
         btnContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

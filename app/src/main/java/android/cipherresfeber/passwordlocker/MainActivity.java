@@ -2,6 +2,7 @@ package android.cipherresfeber.passwordlocker;
 
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.AddPasswordFragment;
+import android.cipherresfeber.passwordlocker.MainActivityFragments.EditProfileFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.ProfileDisplayFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.RetrievePasswordFragment;
 import android.content.ActivityNotFoundException;
@@ -27,7 +28,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.auth.User;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, EditProfileFragment.OnFragmentInteractionListener {
 
     private DrawerLayout drawerLayout;
 
@@ -123,11 +124,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Intent i = new Intent(Intent.ACTION_SEND);
                     i.setType("text/plain");
                     i.putExtra(Intent.EXTRA_SUBJECT, "Password Locker - Safely store all your online passwords");
-                    String sAux = "\nPassword Locker stores passwords on cloud using AES Algorithm. You bet, it's secure." +
+                    String sAux = "\nPassword Locker stores passwords on cloud using AES Algorithm. You bet, it's secure. " +
                             "Download Now:\n";
                     sAux = sAux + "https://play.google.com/store/apps/details?id=" + this.getPackageName();
                     i.putExtra(Intent.EXTRA_TEXT, sAux);
-                    startActivity(Intent.createChooser(i, "Share using:"));
+                    startActivity(Intent.createChooser(i, "Share using"));
                 } catch(Exception e) {
                     Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
                     Log.i("MainActivity", e.getMessage());
@@ -147,4 +148,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
