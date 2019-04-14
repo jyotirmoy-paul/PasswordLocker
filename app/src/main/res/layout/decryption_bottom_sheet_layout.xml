@@ -62,6 +62,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:paddingEnd="40dp"
         android:gravity="start"
         android:textStyle="bold"
         android:layout_marginBottom="10dp"
@@ -69,14 +70,13 @@
         android:id="@+id/txvPassword"
         android:textColor="#ff0000"
         android:textSize="17sp"
-        android:text="iu6+hEHCe1VV8YPjqbnvwrHa1SFenDybWxGnHpe/WeA="
+        android:text="iu6+hEHCe18888888nwrHa6+hEHCe1nvwrHape/WeA=ape/WeA="
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:layout_marginStart="20dp"
+        android:layout_alignEnd="@+id/txvPassword"
         android:layout_below="@+id/txvLablePassword"
-        android:layout_toRightOf="@+id/txvPassword"
         android:visibility="gone"
         android:id="@+id/imvCopyContent"
         android:src="@drawable/ic_copy_content"

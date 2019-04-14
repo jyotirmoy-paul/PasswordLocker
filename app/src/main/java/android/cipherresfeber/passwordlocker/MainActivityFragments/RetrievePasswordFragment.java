@@ -8,6 +8,7 @@ import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
 import android.content.ClipData;
 import android.content.DialogInterface;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,7 +25,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -43,6 +46,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class RetrievePasswordFragment extends Fragment {
 
@@ -50,6 +54,8 @@ public class RetrievePasswordFragment extends Fragment {
     LinearLayout parentLayoutDataAvail;
     LinearLayout parentLayoutDataNotAvail;
     EditText editTextSearchPasswords;
+    ImageView imageViewNoPasswordEntry;
+    TextView textViewNoPasswordEntry;
 
     PasswordAdapter adapter;
     ArrayList<PasswordData> passwordList;
@@ -72,9 +78,31 @@ public class RetrievePasswordFragment extends Fragment {
 
         // referencing to the views
         recyclerView = view.findViewById(R.id.recyclerView);
+        editTextSearchPasswords = view.findViewById(R.id.etSearchPasswords);
+        imageViewNoPasswordEntry = view.findViewById(R.id.imvNoPasswordEntry);
+        textViewNoPasswordEntry = view.findViewById(R.id.txvNoPasswordEntry);
+
+        int imageId[] = {
+                R.drawable.my_passwords_one,
+                R.drawable.my_passwords_two,
+                R.drawable.my_passwords_three,
+                R.drawable.my_passwords_four,
+                R.drawable.my_passwords_five
+        };
+
+        String messageString[] = {
+                "Waiting for something",
+                "Feels a bit lonely",
+                "Trying adding a password",
+                "Passwords shown here",
+                "Waiting for a miracle"
+        };
+
+        imageViewNoPasswordEntry.setImageResource(imageId[new Random().nextInt(imageId.length)]);
+        textViewNoPasswordEntry.setText(messageString[new Random().nextInt(messageString.length)]);
+
         parentLayoutDataAvail = view.findViewById(R.id.parentLayoutDataAvail);
         parentLayoutDataNotAvail = view.findViewById(R.id.parentLayoutDataNotAvail);
-        editTextSearchPasswords = view.findViewById(R.id.etSearchPasswords);
 
         passwordList = new ArrayList<>();
 
@@ -86,6 +114,10 @@ public class RetrievePasswordFragment extends Fragment {
                     passwordList.add(ds.toObject(PasswordData.class));
                 }
                 adapter.notifyDataSetChanged();
+                if(!passwordList.isEmpty()){
+                    parentLayoutDataAvail.setVisibility(View.VISIBLE);
+                    parentLayoutDataNotAvail.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -134,7 +166,11 @@ public class RetrievePasswordFragment extends Fragment {
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
-                                                    Toast.makeText(getContext(), "Item Removed", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(getContext(), "Password Removed", Toast.LENGTH_SHORT).show();
+                                                    if(passwordList.isEmpty()){
+                                                        parentLayoutDataAvail.setVisibility(View.GONE);
+                                                        parentLayoutDataNotAvail.setVisibility(View.VISIBLE);
+                                                    }
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                         @Override
@@ -153,7 +189,7 @@ public class RetrievePasswordFragment extends Fragment {
                                     adapter.notifyItemChanged(viewHolder.getAdapterPosition());
                                 }
                             })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setIcon(R.drawable.ic_delete)
                             .show();
 
 

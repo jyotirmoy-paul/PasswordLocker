@@ -114,20 +114,24 @@ public class EditProfileFragment extends Fragment {
 
                 }
 
-
-                new AlertDialog.Builder(getContext())
-                        .setCancelable(false)
-                        .setTitle("Profile Updated")
-                        .setMessage("Successfully updated your profile info")
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                getActivity().finish();
-                            }
-                        })
-                        .setIcon(R.drawable.ic_done)
-                        .show();
+                if(!newLockerPin.isEmpty() && !newUserName.isEmpty()){
+                    new AlertDialog.Builder(getContext())
+                            .setCancelable(false)
+                            .setTitle("Profile Updated")
+                            .setMessage("Successfully updated your profile info")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    startActivity(new Intent(getContext(), MainActivity.class));
+                                    getActivity().finish();
+                                }
+                            })
+                            .setIcon(R.drawable.ic_done)
+                            .show();
+                } else{
+                    Toast.makeText(getContext(),
+                            "Nothing to update!", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });

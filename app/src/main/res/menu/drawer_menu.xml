@@ -26,12 +26,18 @@
     <item android:title="Communicate">
 
         <menu>
+            <item android:id="@+id/navGithub"
+                android:icon="@drawable/github_logo"
+                android:title="View Project on Github"/>
+
             <item android:id="@+id/navRate"
                 android:icon="@drawable/ic_rate_review"
                 android:title="Rate and Review"/>
+
             <item android:id="@+id/navShare"
                 android:icon="@drawable/ic_share"
                 android:title="Share"/>
+
             <item android:id="@+id/navEmail"
                 android:icon="@drawable/ic_report_bug"
                 android:title="Email Developer / Report Bug"/>

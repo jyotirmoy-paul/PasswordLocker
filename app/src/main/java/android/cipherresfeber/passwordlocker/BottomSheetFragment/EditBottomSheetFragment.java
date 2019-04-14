@@ -1,5 +1,6 @@
 package android.cipherresfeber.passwordlocker.BottomSheetFragment;
 
+import android.app.ProgressDialog;
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
@@ -114,6 +115,12 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
 
         String userUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setMessage("Updating Password...");
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+
         // reference to the firestore for updating data
         final DocumentReference reference = FirebaseFirestore.getInstance()
                 .collection(DatabaseConstants.DATABASE_PASSWORD_COLLECTION)
@@ -134,13 +141,15 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                 }
 
                 if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
-                    editTextDecryptionPassword.setError("Invalid Length");
+                    Toast.makeText(getContext(),
+                            "Decryption Password of Invalid Length", Toast.LENGTH_SHORT).show();
+                    editTextDecryptionPassword.setError("");
                     editTextDecryptionPassword.requestFocus();
                     return;
                 }
 
                 String savedDecryptionPassword = preferences
-                        .getString(UserConstants.USER_ENCRYPTION_PASS_CODE,UserConstants.DEFAULT_ENTRY_PASS_CODE);
+                        .getString(UserConstants.USER_ENCRYPTION_PASS_CODE, UserConstants.DEFAULT_ENTRY_PASS_CODE);
 
                 if(!savedDecryptionPassword.equals(decryptionPassword)){
                     Toast.makeText(getContext(),
@@ -148,6 +157,8 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                     dismiss();
                     return;
                 }
+
+                progressDialog.show();
 
                 try{
                     AESCryptography.setKey(modifyUserPassword(savedDecryptionPassword));
@@ -163,6 +174,7 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getContext(),
                                     "Password Updated!", Toast.LENGTH_SHORT).show();
+                            progressDialog.cancel();
                             dismiss();
                         }
                     }).addOnFailureListener(new OnFailureListener() {
@@ -171,6 +183,7 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                             Toast.makeText(getContext(),
                                     "Something went wrong", Toast.LENGTH_SHORT).show();
                             Log.i("MainActivity", e.getMessage());
+                            progressDialog.cancel();
                         }
                     });
 
@@ -178,6 +191,7 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                 } catch (Exception e){
                     Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_SHORT).show();
                     Log.i("MainActivity", e.getMessage());
+                    progressDialog.cancel();
                 }
 
             }

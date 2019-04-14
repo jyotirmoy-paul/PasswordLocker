@@ -152,16 +152,18 @@ public class AddPasswordFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String userInfoDisplay = "Your entered password is encrypted using AES Algorithm with a key" +
-                        " (set by you at login time) and without the key no one can decrypt your password." +
-                        "\nRest assure, your password will be in good hand.";
+                String userInfoDisplay = "Your passwords are encrypted using AES Algorithm with a key" +
+                        " (set by you at registration time) and without the key no one can decrypt your password." +
+                        "\n" +
+                        "That means only you could see your passwords." +
+                        "\n" +
+                        "Security is Guaranteed!";
 
                 new AlertDialog.Builder(getContext())
-                        .setTitle("AES Encryption")
+                        .setTitle("Advanced Encryption Standard Algorithm Used")
                         .setMessage(userInfoDisplay)
                         .setPositiveButton(android.R.string.yes,null)
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setCancelable(false)
+                        .setIcon(R.drawable.ic_info)
                         .show();
 
             }

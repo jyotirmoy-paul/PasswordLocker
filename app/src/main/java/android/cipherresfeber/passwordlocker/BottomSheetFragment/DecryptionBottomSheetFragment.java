@@ -65,8 +65,10 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
 
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
-                if(decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
-                    editTextDecryptionPassword.setError("Invalid Length");
+                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
+                    Toast.makeText(getContext(),
+                            "Decryption Password of Invalid Length", Toast.LENGTH_SHORT).show();
+                    editTextDecryptionPassword.setError("");
                     editTextDecryptionPassword.requestFocus();
                     return;
                 }

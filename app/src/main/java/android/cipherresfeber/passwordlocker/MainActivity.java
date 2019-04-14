@@ -1,6 +1,7 @@
 package android.cipherresfeber.passwordlocker;
 
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
+import android.cipherresfeber.passwordlocker.MainActivityFragments.AboutFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.AddPasswordFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.EditProfileFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.ProfileDisplayFragment;
@@ -100,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportActionBar().setTitle("Profile");
                 break;
             case R.id.navAbout:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileDisplayFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
                 getSupportActionBar().setTitle("About");
                 break;
             case R.id.navRate:
@@ -140,6 +141,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Password Locker Feedback");
                 emailIntent.putExtra(Intent.EXTRA_TEXT, "");
                 startActivity(Intent.createChooser(emailIntent, "Chooser Title"));
+                break;
+            case R.id.navGithub:
+                Intent viewOnGithub = new Intent(Intent.ACTION_VIEW);
+                viewOnGithub.setData(Uri.parse("https://github.com/jyotirmoy-paul/PasswordLocker"));
+                startActivity(viewOnGithub);
                 break;
         }
 
