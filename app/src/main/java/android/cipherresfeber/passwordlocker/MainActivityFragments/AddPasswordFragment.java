@@ -51,7 +51,7 @@ public class AddPasswordFragment extends Fragment {
 
         userSetEncryptionKey = getContext()
                 .getSharedPreferences(UserConstants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE)
-                .getString(UserConstants.USER_ENCRYPTION_PASS_CODE, "tempPass");
+                .getString(UserConstants.USER_ENCRYPTION_PASS_CODE, UserConstants.DEFAULT_ENCRYPTION_PASS_CODE);
 
 
         reference = FirebaseFirestore.getInstance()

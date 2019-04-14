@@ -1,22 +1,27 @@
 package android.cipherresfeber.passwordlocker;
 
+import android.cipherresfeber.passwordlocker.AuthenticationActivityFragments.InitialSetupFragment;
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.util.NumberUtils;
 
 import io.opencensus.internal.StringUtil;
 
-public class AuthenticationActivity extends AppCompatActivity {
+public class AuthenticationActivity extends AppCompatActivity implements InitialSetupFragment.OnFragmentInteractionListener{
 
     private int pinCodeCounter;
     private String userEnteredCode;
@@ -36,7 +41,8 @@ public class AuthenticationActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(UserConstants.SHARED_PREFERENCE_NAME, MODE_PRIVATE);
         savedPassCode = sharedPreferences.getString(UserConstants.USER_ENTRY_PASS_CODE,
                 UserConstants.DEFAULT_ENTRY_PASS_CODE);
-        savedPassCode = "1234";
+        String userFirstName = sharedPreferences.getString(UserConstants.USER_NAME,
+                "Default User").split(" ")[0];
 
         LinearLayout parentLayoutFirstTime = findViewById(R.id.linearLayoutFirst);
         LinearLayout parentLayoutGeneralTime = findViewById(R.id.linearLayoutGeneral);
@@ -48,12 +54,28 @@ public class AuthenticationActivity extends AppCompatActivity {
             parentLayoutFirstTime.setVisibility(View.VISIBLE);
             parentLayoutGeneralTime.setVisibility(View.GONE);
 
-            // TODO: do it
+            TextView textViewUserSecurityMessage = findViewById(R.id.txvUserSecurityMessage);
+            ImageView btnContinue = findViewById(R.id.btnContinue);
 
+            String userSecurityMessage = "Welcome Abroad, " + userFirstName + "\n" +
+                    "You are requested to set an app Lock PIN and Decryption Password in the next screen. " +
+                    "Choose your Lock PIN wisely, as it will be the first line of defense.";
+            textViewUserSecurityMessage.setText(userSecurityMessage);
+
+            btnContinue.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    InitialSetupFragment fragment = new InitialSetupFragment();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_right,
+                            R.anim.enter_from_right, R.anim.exit_to_right);
+                    transaction.addToBackStack(null);
+                    transaction.add(R.id.fragmentContainer, fragment, "InitialSetupFragment").commit();
+                }
+            });
 
         } else{
             // general time open
-
             parentLayoutFirstTime.setVisibility(View.GONE);
             parentLayoutGeneralTime.setVisibility(View.VISIBLE);
 
@@ -132,5 +154,9 @@ public class AuthenticationActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
     }
 }

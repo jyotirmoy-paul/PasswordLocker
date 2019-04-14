@@ -14,18 +14,18 @@
         android:layout_height="0dp"/>
 
     <TextView
+        android:id="@+id/txvUserProfilePicDisplay"
         android:textSize="40sp"
         android:gravity="center"
         android:text="T"
         android:textColor="#fff"
         android:textStyle="bold"
         android:background="@drawable/profile_identity_background"
-        android:id="@+id/user_profile_pic"
         android:layout_width="80dp"
         android:layout_height="80dp"/>
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/txvUserNameDisplay"
         android:textStyle="bold"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -35,7 +35,7 @@
         android:textColor="#fff" />
 
     <TextView
-        android:id="@+id/user_detail"
+        android:id="@+id/txvUserPhoneNumberDisplay"
         android:textSize="13sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -181,12 +179,55 @@
 
     <!-- First time Screen Layout -->
     <LinearLayout
+        android:background="#fff"
+        android:gravity="center"
         android:visibility="visible"
         android:orientation="vertical"
         android:id="@+id/linearLayoutFirst"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:textSize="27sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            android:text="Let's setup a few things"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/setup_wizard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txvUserSecurityMessage"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:textSize="17sp"
+            android:textColor="@color/colorPrimary"
+            android:text="Hello, Default\nYou are requested to set an app lock pin and decryption password in the next screen. Choose your pin wisely, as it will be the first line of defense."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+        <ImageView
+            android:id="@+id/btnContinue"
+            android:layout_marginEnd="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="end"
+            android:src="@drawable/ic_continue"
+            android:layout_width="45dp"
+            android:layout_height="45dp" />
+
     </LinearLayout>
 
-</LinearLayout>
+    <!-- Layout for settings up initial things -->
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

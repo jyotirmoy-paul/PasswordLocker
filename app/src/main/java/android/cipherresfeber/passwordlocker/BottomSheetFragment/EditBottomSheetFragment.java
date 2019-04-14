@@ -1,9 +1,13 @@
 package android.cipherresfeber.passwordlocker.BottomSheetFragment;
 
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
+import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.cipherresfeber.passwordlocker.UserDataTypes.PasswordData;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.hardware.usb.UsbRequest;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +30,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.auth.User;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -37,6 +42,11 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.edit_bottom_sheet_layout, container, false);
+
+        final SharedPreferences preferences = getContext().getSharedPreferences(
+                UserConstants.SHARED_PREFERENCE_NAME,
+                Context.MODE_PRIVATE
+        );
 
         final String serviceProvider;
         final String loginId;
@@ -123,17 +133,24 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                     return;
                 }
 
-                if(decryptionPassword.length() < 10 || decryptionPassword.length() > 16){
+                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
                     editTextDecryptionPassword.setError("Invalid Length");
                     editTextDecryptionPassword.requestFocus();
                     return;
                 }
 
-                // TODO: check for the decryption password and take decision accordingly
+                String savedDecryptionPassword = preferences
+                        .getString(UserConstants.USER_ENCRYPTION_PASS_CODE,UserConstants.DEFAULT_ENTRY_PASS_CODE);
+
+                if(!savedDecryptionPassword.equals(decryptionPassword)){
+                    Toast.makeText(getContext(),
+                            "Wrong Password!", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                    return;
+                }
 
                 try{
-                    // TODO: get user set password
-                    AESCryptography.setKey(modifyUserPassword("tempPass"));
+                    AESCryptography.setKey(modifyUserPassword(savedDecryptionPassword));
                     String newEncryptedPassword = AESCryptography.encrypt(newPassword);
 
                     DateFormat dateFormat = new SimpleDateFormat("dd MMM yy");

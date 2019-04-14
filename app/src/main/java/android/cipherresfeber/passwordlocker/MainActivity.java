@@ -1,5 +1,6 @@
 package android.cipherresfeber.passwordlocker;
 
+import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.AddPasswordFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.ProfileDisplayFragment;
 import android.cipherresfeber.passwordlocker.MainActivityFragments.RetrievePasswordFragment;
@@ -20,9 +21,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.auth.User;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -32,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences preferences = getSharedPreferences(UserConstants.SHARED_PREFERENCE_NAME,
+                MODE_PRIVATE);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -53,6 +59,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // set the user name, profile picture and contact detail
         View headerView = navigationView.getHeaderView(0);
+        TextView textViewUserProfilePicDisplay = headerView.findViewById(R.id.txvUserProfilePicDisplay);
+        TextView textViewUserNameDisplay = headerView.findViewById(R.id.txvUserNameDisplay);
+        TextView textViewUserPhoneNumberDisplay = headerView.findViewById(R.id.txvUserPhoneNumberDisplay);
+
+        textViewUserProfilePicDisplay.setText(preferences.getString(UserConstants.USER_NAME,
+                "Default User").substring(0,1));
+        textViewUserNameDisplay.setText(preferences.getString(UserConstants.USER_NAME,
+                "Default User"));
+        textViewUserPhoneNumberDisplay.setText("+91 " + preferences.getString(UserConstants.USER_PHONE_NUMBER,
+                "9998887654"));
 
     }
 
