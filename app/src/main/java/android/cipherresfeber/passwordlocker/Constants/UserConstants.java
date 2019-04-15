@@ -11,4 +11,6 @@ public class UserConstants {
 
     public static final String USER_ENCRYPTION_PASS_CODE = "user_encryption_pass_code";
     public static final String DEFAULT_ENCRYPTION_PASS_CODE = "????";
+
+    public static final String EXTRA_CHARACTER_FOR_MODIFYING_MASTER_KEY = "P";
 }

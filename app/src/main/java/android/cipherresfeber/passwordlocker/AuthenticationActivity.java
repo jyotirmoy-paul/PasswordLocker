@@ -1,5 +1,6 @@
 package android.cipherresfeber.passwordlocker;
 
+import android.cipherresfeber.passwordlocker.AuthenticationActivityFragments.InitialLogoDisplayFragment;
 import android.cipherresfeber.passwordlocker.AuthenticationActivityFragments.InitialSetupFragment;
 import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.content.Intent;
@@ -62,8 +63,9 @@ public class AuthenticationActivity extends AppCompatActivity implements Initial
             ImageView btnContinue = findViewById(R.id.btnContinue);
 
             String userSecurityMessage = "Welcome Abroad, " + userFirstName + "\n" +
-                    "You are requested to set an app Lock PIN and Decryption Password in the next screen. " +
-                    "Choose your Lock PIN wisely, as it will be the first line of defense.";
+                    "You are requested to set an app Lock PIN and Master Password in the next screen. " +
+                    "Choose your Lock PIN wisely, as it will be the first line of defense.\n" +
+                    "If you already had an account with us, we request you to set the same master password as before (to avoid confusion).";
             textViewUserSecurityMessage.setText(userSecurityMessage);
 
             btnContinue.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +82,10 @@ public class AuthenticationActivity extends AppCompatActivity implements Initial
 
         } else{
             // general time open
+            InitialLogoDisplayFragment logoDisplayFragment = new InitialLogoDisplayFragment();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragmentContainer, logoDisplayFragment, "LogoDisplayFragment").commit();
+
             parentLayoutFirstTime.setVisibility(View.GONE);
             parentLayoutGeneralTime.setVisibility(View.VISIBLE);
 

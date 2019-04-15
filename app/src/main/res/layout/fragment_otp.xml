@@ -32,7 +32,7 @@
         android:gravity="center"
         android:textStyle="bold"
         android:textColor="@color/colorPrimary"
-        android:textSize="27sp"
+        android:textSize="25sp"
         android:text="Verify your number, TestUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
@@ -69,12 +69,13 @@
     </LinearLayout>
 
     <Button
+        android:textAllCaps="false"
         android:textSize="17sp"
         android:id="@+id/btnVerifyOtp"
-        android:text="verify"
+        android:text="Verify Number"
         android:textColor="#fff"
         android:background="@color/colorPrimary"
-        android:layout_width="150dp"
+        android:layout_width="170dp"
         android:layout_height="45dp" />
 
 </LinearLayout>

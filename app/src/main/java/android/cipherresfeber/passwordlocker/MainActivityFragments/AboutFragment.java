@@ -24,13 +24,13 @@ public class AboutFragment extends Fragment {
                         "\n" +
                         "It is quite surprising that almost everyone uses only a single password for all their online accounts. In case, if a hacker finds out any one of your passwords, you risk granting him/her full access of your entire online world! On the other hand, if you try using separate passwords for every different account you have, it would be a nightmare trying to remember all of them. \n" +
                         "\n" +
-                        "Here is where Password Locker can help you manage all your passwords, storing them locally as well as on cloud in an encrypted format, such that only you could decrypt them.\n" +
+                        "This is where Password Locker can help you manage all your passwords, storing them locally as well as on cloud in an encrypted format, such that only you could decrypt them.\n" +
                         "\n" +
                         "Main Highlights:\n" +
-                        "\t1. Encrypted Password Storage\n" +
-                        "\t2. Inbuilt App Locker PIN\n" +
-                        "\t3. Clean and Easy to use UI\n" +
-                        "\t4. Open Sourced Project";
+                        "\t\t1. Encrypted Password Storage\n" +
+                        "\t\t2. Inbuilt App Locker PIN\n" +
+                        "\t\t3. Clean and Easy to use UI\n" +
+                        "\t\t4. Open Sourced Project";
 
         textViewWhyPasswordLocker.setText(whyPasswordLocker);
 

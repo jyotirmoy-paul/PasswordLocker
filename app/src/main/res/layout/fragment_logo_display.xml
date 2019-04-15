@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="#fff"
+    android:gravity="center"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/txvAppName"
+        android:textStyle="bold"
+        android:textSize="35sp"
+        android:text="Password Locker"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/txvTagLine"
+        android:textSize="17sp"
+        android:text="Fell the freedom in managing Passwords"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/imvLogoDisplay"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/icon_launcher"
+        android:layout_width="200dp"
+        android:layout_height="400dp" />
+
+</LinearLayout>

@@ -1,6 +1,7 @@
 package android.cipherresfeber.passwordlocker.BottomSheetFragment;
 
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
+import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.content.ClipData;
@@ -67,7 +68,7 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
                 if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
                     Toast.makeText(getContext(),
-                            "Decryption Password of Invalid Length", Toast.LENGTH_SHORT).show();
+                            "Master Password of Invalid Length", Toast.LENGTH_SHORT).show();
                     editTextDecryptionPassword.setError("");
                     editTextDecryptionPassword.requestFocus();
                     return;
@@ -134,7 +135,7 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
 
         String modifiedPassword = password;
         for(int i=0; i<charToGenerate; i++){
-            modifiedPassword += "P";
+            modifiedPassword += UserConstants.EXTRA_CHARACTER_FOR_MODIFYING_MASTER_KEY;
         }
 
         return modifiedPassword;

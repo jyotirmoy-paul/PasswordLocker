@@ -99,9 +99,10 @@
         </LinearLayout>
 
         <Button
+            android:textAllCaps="false"
             android:textSize="17sp"
             android:id="@+id/btnGetOtp"
-            android:text="send otp"
+            android:text="Send OTP"
             android:textColor="#fff"
             android:background="@color/colorPrimary"
             android:layout_width="150dp"

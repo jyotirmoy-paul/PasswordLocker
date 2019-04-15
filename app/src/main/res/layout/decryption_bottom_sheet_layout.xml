@@ -92,7 +92,7 @@
 
         <EditText
             android:inputType="textPassword"
-            android:padding="5dp"
+            android:padding="10dp"
             android:textSize="17sp"
             android:gravity="center_vertical"
             android:background="#fff"
@@ -103,7 +103,7 @@
             android:maxLines="1"
             android:id="@+id/etDecryptionPassword"
             android:textColor="#000"
-            android:hint="Decryption Password"
+            android:hint="Master Password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

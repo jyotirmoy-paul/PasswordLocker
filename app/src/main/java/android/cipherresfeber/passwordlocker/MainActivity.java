@@ -89,19 +89,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         switch (menuItem.getItemId()){
             case R.id.navMyPasswords:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RetrievePasswordFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in_frag, R.anim.fade_out_frag)
+                        .replace(R.id.fragment_container, new RetrievePasswordFragment()).commit();
                 getSupportActionBar().setTitle("My Passwords");
                 break;
             case R.id.navAddPassword:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AddPasswordFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in_frag, R.anim.fade_out_frag)
+                        .replace(R.id.fragment_container, new AddPasswordFragment()).commit();
                 getSupportActionBar().setTitle("Add Password");
                 break;
             case R.id.navProfile:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileDisplayFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in_frag, R.anim.fade_out_frag)
+                        .replace(R.id.fragment_container, new ProfileDisplayFragment()).commit();
                 getSupportActionBar().setTitle("Profile");
                 break;
             case R.id.navAbout:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new AboutFragment()).commit();
+                getSupportFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.fade_in_frag, R.anim.fade_out_frag)
+                        .replace(R.id.fragment_container, new AboutFragment()).commit();
                 getSupportActionBar().setTitle("About");
                 break;
             case R.id.navRate:

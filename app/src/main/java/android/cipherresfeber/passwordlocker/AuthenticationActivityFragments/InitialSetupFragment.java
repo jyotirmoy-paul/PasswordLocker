@@ -63,17 +63,11 @@ public class InitialSetupFragment extends Fragment {
                         "Use a memorable but hard to guess PIN.";
 
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Lock Pin Info")
+                        .setTitle("Lock Pin")
                         .setMessage(userMessage)
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(R.drawable.ic_lock)
                         .setCancelable(false)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                getActivity().finish();
-                            }
-                        })
+                        .setPositiveButton("Ok", null)
                         .show();
             }
         });
@@ -84,24 +78,20 @@ public class InitialSetupFragment extends Fragment {
             public void onClick(View v) {
 
                 String userMessage =
-                        "Decryption/Encryption Password is used to decrypt/encrypt your saved passwords. " +
+                        "Master Password is used to decrypt/encrypt your saved passwords. " +
                         "So that even if an attacker manages to get data from our server, he/she won't " +
                         "be able to decrypt them." +
                         "\n" +
-                        "Use a memorable but hard to guess decryption/encryption password.";
+                        "Use a memorable but hard to guess master password." +
+                                "\n\n" +
+                                "(If you have previously used our service, please use the same Master Password, to avoid confusion)";
 
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Decryption Password Info")
+                        .setTitle("Master Password")
                         .setMessage(userMessage)
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(R.drawable.ic_decryption_key)
                         .setCancelable(false)
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                startActivity(new Intent(getContext(), MainActivity.class));
-                                getActivity().finish();
-                            }
-                        })
+                        .setPositiveButton("Ok", null)
                         .show();
             }
         });
@@ -150,17 +140,21 @@ public class InitialSetupFragment extends Fragment {
                 editor.apply();
 
                 String userMessage = "Congrats! You have successfully setup your account on Password Locker. " +
-                        "\nLock Pin is used to get into the app, and the Decryption Password is used to " +
+                        "\nLocker Pin is used to get into the app, and the Master Password is used to " +
                         "encrypt/decrypt your saved passwords!" +
-                        "\nYou can change the Lock Pin, but Decryption Password " +
+                        "\nYou can change the Locker Pin, but Master Password " +
                         "is set permanent (this is done to avoid confusion)" +
+                        "\n" +
+                        "\n" +
+                        "*Passwords encrypted with an master key can only be decrypted by the same key, this is why we don't encourage you to change the master key." +
+                        "\n" +
                         "\n" +
                         "Press 'Ok' to get to the Home Page";
 
                 new AlertDialog.Builder(getContext())
                         .setTitle("Welcome Abroad!")
                         .setMessage(userMessage)
-                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setIcon(R.drawable.ic_info)
                         .setCancelable(false)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override

@@ -37,8 +37,6 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_registration);
-
 
         try{
             String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -50,54 +48,54 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
             }
 
         } catch (Exception e){
-            // the user is not signed in, continue with signup
-            Log.i("Registration Activity", e.getMessage());
+            // the user is not signed in, continue with registration process
+
+            setContentView(R.layout.activity_registration);
+
+            Button buttonGetOtp = findViewById(R.id.btnGetOtp);
+            final EditText editTextUserPhoneNumber = findViewById(R.id.etUserPhoneNumber);
+            final EditText editTextUserName = findViewById(R.id.etUserName);
+
+            pd = new ProgressDialog(RegistrationActivity.this);
+            pd.setCanceledOnTouchOutside(false);
+            pd.setCancelable(false);
+            pd.setTitle("Please Wait");
+            pd.setMessage("Sending OTP.....");
+
+            buttonGetOtp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    userPhoneNumber = editTextUserPhoneNumber.getText().toString().trim();
+                    userName = editTextUserName.getText().toString().trim();
+
+                    if(userName.length() > 20 || userName.length() < 5){
+                        editTextUserName.setError("5 - 20 chars only");
+                        editTextUserName.requestFocus();
+                        return;
+                    }
+
+                    if(userPhoneNumber.length() != 10){
+                        editTextUserPhoneNumber.setError("10 digits only");
+                        editTextUserPhoneNumber.requestFocus();
+                        return;
+                    }
+
+                    setUpVerificationCallbacks();
+
+                    PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                            "+91" + userPhoneNumber,
+                            60,
+                            TimeUnit.SECONDS,
+                            RegistrationActivity.this,
+                            verificationCallbacks
+                    );
+
+                    // finally show a progress dialog box
+                    pd.show();
+                }
+            });
+
         }
-
-
-
-        Button buttonGetOtp = findViewById(R.id.btnGetOtp);
-        final EditText editTextUserPhoneNumber = findViewById(R.id.etUserPhoneNumber);
-        final EditText editTextUserName = findViewById(R.id.etUserName);
-
-        pd = new ProgressDialog(RegistrationActivity.this);
-        pd.setCanceledOnTouchOutside(false);
-        pd.setCancelable(false);
-        pd.setTitle("Please Wait");
-        pd.setMessage("Sending OTP.....");
-
-        buttonGetOtp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userPhoneNumber = editTextUserPhoneNumber.getText().toString().trim();
-                userName = editTextUserName.getText().toString().trim();
-
-                if(userName.length() > 20 || userName.length() < 5){
-                    editTextUserName.setError("5 - 20 chars only");
-                    editTextUserName.requestFocus();
-                    return;
-                }
-
-                if(userPhoneNumber.length() != 10){
-                    editTextUserPhoneNumber.setError("10 digits only");
-                    editTextUserPhoneNumber.requestFocus();
-                    return;
-                }
-
-                setUpVerificationCallbacks();
-
-                PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        "+91" + userPhoneNumber,
-                        60,
-                        TimeUnit.SECONDS,
-                        RegistrationActivity.this,
-                        verificationCallbacks
-                );
-
-                // finally show a progress dialog box
-                pd.show();
-            }
-        });
 
     }
 

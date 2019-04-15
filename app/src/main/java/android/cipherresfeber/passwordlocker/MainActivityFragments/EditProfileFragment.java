@@ -77,6 +77,8 @@ public class EditProfileFragment extends Fragment {
                 String confirmLockerPin = editTextConfirmLockerPin.getText().toString().trim();
                 String oldLockerPin = editTextOldLockerPin.getText().toString().trim();
 
+                boolean updateUserName = false;
+
                 if(!newUserName.isEmpty()){
                     if(newUserName.length() > 20 || newUserName.length() < 5){
                         editTextNewUserName.setError("5 - 20 chars only");
@@ -84,22 +86,20 @@ public class EditProfileFragment extends Fragment {
                         return;
                     }
 
-                    preferences.edit().putString(UserConstants.USER_NAME, newUserName).apply();
-                    Toast.makeText(getContext(),
-                            "Updated user name", Toast.LENGTH_SHORT).show();
+                    updateUserName = true;
 
                 }
 
                 if(!newLockerPin.isEmpty()){
 
                     if(newLockerPin.length() != 4){
-                        editTextNewLockerPin.setError("4 digits allowed");
+                        editTextNewLockerPin.setError("4 digits only");
                         editTextNewLockerPin.requestFocus();
                         return;
                     }
 
                     if(!newLockerPin.equals(confirmLockerPin)){
-                        editTextConfirmLockerPin.setError("Does not matches");
+                        editTextConfirmLockerPin.setError("Does not match");
                         editTextConfirmLockerPin.requestFocus();
                         return;
                     }
@@ -112,13 +112,17 @@ public class EditProfileFragment extends Fragment {
 
                     preferences.edit().putString(UserConstants.USER_ENTRY_PASS_CODE, newLockerPin).apply();
 
+                    if(updateUserName){
+                        preferences.edit().putString(UserConstants.USER_NAME, newUserName).apply();
+                    }
+
                 }
 
-                if(!newLockerPin.isEmpty() && !newUserName.isEmpty()){
+                if(!newLockerPin.isEmpty() || !newUserName.isEmpty()){
                     new AlertDialog.Builder(getContext())
                             .setCancelable(false)
                             .setTitle("Profile Updated")
-                            .setMessage("Successfully updated your profile info")
+                            .setMessage("Successfully updated your profile")
                             .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {

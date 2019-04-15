@@ -81,7 +81,7 @@ public class OtpFragment extends Fragment {
         String firstName = userName.split(" ")[0];
 
         textViewUserPhoneNumber.setText("+91" + " " + userPhoneNumber);
-        textViewUserMessage.setText("Verify your phone, " + firstName);
+        textViewUserMessage.setText("Verify your number, " + firstName);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
