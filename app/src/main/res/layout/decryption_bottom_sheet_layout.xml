@@ -26,6 +26,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:textStyle="bold"
         android:layout_below="@+id/txvLableServiceProvider"
         android:id="@+id/txvServiceProviderName"
         android:textColor="#000"
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:textStyle="bold"
         android:layout_below="@+id/txvLableLoginId"
         android:id="@+id/txvLoginId"
         android:textColor="#000"

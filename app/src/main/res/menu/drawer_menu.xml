@@ -38,6 +38,10 @@
                 android:icon="@drawable/ic_share"
                 android:title="Share"/>
 
+            <item android:id="@+id/navPrivacyPolicy"
+                android:icon="@drawable/ic_privacy_policy"
+                android:title="View Privacy Policy"/>
+
             <item android:id="@+id/navEmail"
                 android:icon="@drawable/ic_report_bug"
                 android:title="Email Developer / Report Bug"/>

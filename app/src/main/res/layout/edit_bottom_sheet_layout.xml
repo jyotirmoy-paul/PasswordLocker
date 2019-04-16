@@ -18,14 +18,15 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_below="@+id/lableHeading"
         android:id="@+id/txvLableServiceProvider"
-        android:textSize="13sp"
-        android:text="Service Provider"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lableHeading"
+        android:text="Service Provider"
+        android:textSize="13sp" />
 
     <TextView
+        android:textStyle="bold"
         android:layout_below="@+id/txvLableServiceProvider"
         android:id="@+id/txvServiceProviderName"
         android:textColor="#000"
@@ -44,6 +45,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:textStyle="bold"
         android:layout_below="@+id/txvLableLoginId"
         android:id="@+id/txvLoginId"
         android:textColor="#000"

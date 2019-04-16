@@ -155,6 +155,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 viewOnGithub.setData(Uri.parse("https://github.com/jyotirmoy-paul/PasswordLocker"));
                 startActivity(viewOnGithub);
                 break;
+            case R.id.navPrivacyPolicy:
+                startActivity(
+                        new Intent(Intent.ACTION_VIEW)
+                                .setData(Uri.parse("https://fir-credebit.firebaseapp.com/"))
+                );
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
