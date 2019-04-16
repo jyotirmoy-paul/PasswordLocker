@@ -113,7 +113,7 @@ public class AddPasswordFragment extends Fragment {
 
                 final ProgressDialog pd = new ProgressDialog(getContext());
                 pd.setTitle("Please Wait");
-                pd.setMessage("Uploading Data...");
+                pd.setMessage("Uploading Data");
                 pd.setCancelable(false);
                 pd.setCanceledOnTouchOutside(false);
                 pd.show();

@@ -117,7 +117,7 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setTitle("Please Wait");
-        progressDialog.setMessage("Updating Password...");
+        progressDialog.setMessage("Updating Password");
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
 

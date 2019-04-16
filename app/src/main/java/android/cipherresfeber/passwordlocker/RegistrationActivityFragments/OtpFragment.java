@@ -111,7 +111,7 @@ public class OtpFragment extends Fragment {
         pd.setCancelable(false);
         pd.setCanceledOnTouchOutside(false);
         pd.setTitle("Please Wait");
-        pd.setMessage("Verifying OTP.....");
+        pd.setMessage("Verifying OTP");
 
         return view;
     }

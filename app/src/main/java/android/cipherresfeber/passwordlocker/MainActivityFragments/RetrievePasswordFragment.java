@@ -1,5 +1,6 @@
 package android.cipherresfeber.passwordlocker.MainActivityFragments;
 
+import android.app.ProgressDialog;
 import android.cipherresfeber.passwordlocker.Adapters.PasswordAdapter;
 import android.cipherresfeber.passwordlocker.BottomSheetFragment.EditBottomSheetFragment;
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
@@ -161,11 +162,20 @@ public class RetrievePasswordFragment extends Fragment {
                             .setMessage("Are you sure you want to delete this password entry?")
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
+
+                                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                    progressDialog.setTitle("Please Wait");
+                                    progressDialog.setMessage("Deleting Password Entry");
+                                    progressDialog.setCancelable(false);
+                                    progressDialog.setCanceledOnTouchOutside(false);
+                                    progressDialog.show();
+
                                     String key = (String) viewHolder.itemView.getTag();
                                     reference.document(key).delete()
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void aVoid) {
+                                                    progressDialog.cancel();
                                                     Toast.makeText(getContext(), "Password Removed", Toast.LENGTH_SHORT).show();
                                                     if(passwordList.isEmpty()){
                                                         parentLayoutDataAvail.setVisibility(View.GONE);
@@ -178,6 +188,7 @@ public class RetrievePasswordFragment extends Fragment {
                                             Toast.makeText(getContext(),
                                                     "Oops! Couldn't delete", Toast.LENGTH_SHORT).show();
                                             adapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                                            progressDialog.cancel();
                                         }
                                     });
                                 }

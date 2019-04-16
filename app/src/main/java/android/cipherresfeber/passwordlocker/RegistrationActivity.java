@@ -60,7 +60,7 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
             pd.setCanceledOnTouchOutside(false);
             pd.setCancelable(false);
             pd.setTitle("Please Wait");
-            pd.setMessage("Sending OTP.....");
+            pd.setMessage("Sending OTP");
 
             buttonGetOtp.setOnClickListener(new View.OnClickListener() {
                 @Override
