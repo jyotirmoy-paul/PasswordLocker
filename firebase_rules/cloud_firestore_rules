@@ -1,0 +1,9 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+  	// allow a user to modify data only under his document
+    match /password_collections/{user_uid}/user_passwords/{password_id} {
+      allow read, write, delete, update: if request.auth != null && request.auth.uid == user_uid;
+    }
+  }
+}

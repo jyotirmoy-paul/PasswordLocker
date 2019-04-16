@@ -1,0 +1,18 @@
+{
+  "rules": {
+
+    // nobody can read/write the developer_master_key (for security purpose)
+    "developer_master_key": {
+      ".write": false,
+        ".read": false
+    },
+
+    // don't allow anyone to read from user_data section
+    // write is only possible if user is authenticated
+    "user_data": {
+      ".write": "auth != null",
+      ".read": false
+    }
+
+  }
+}
