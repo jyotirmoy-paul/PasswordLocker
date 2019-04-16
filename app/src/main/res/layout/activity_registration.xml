@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrationActivity">
+    tools:context="paul.cipherresfeber.passwordlocker.RegistrationActivity">
 
     <LinearLayout
         android:background="#fff"
@@ -73,7 +73,7 @@
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_user_name"
                 android:textColorHint="@color/colorPrimary"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:padding="15dp"
                 android:textSize="17sp"
                 android:hint="Your Name"
@@ -95,7 +95,7 @@
                 android:drawablePadding="15dp"
                 android:drawableStart="@drawable/ic_phone_number"
                 android:textColorHint="@color/colorPrimary"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:padding="15dp"
                 android:textSize="17sp"
                 android:hint="Your Phone Number"

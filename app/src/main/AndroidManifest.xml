@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="android.cipherresfeber.passwordlocker">
+    package="paul.cipherresfeber.passwordlocker">
 
     <application
         android:allowBackup="true"
@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/launcher_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegistrationActivity"
+        <activity android:name="paul.cipherresfeber.passwordlocker.RegistrationActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
@@ -17,10 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AuthenticationActivity"
+        <activity android:name="paul.cipherresfeber.passwordlocker.AuthenticationActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".MainActivity"
+        <activity android:name="paul.cipherresfeber.passwordlocker.MainActivity"
             android:screenOrientation="portrait">
         </activity>
     </application>

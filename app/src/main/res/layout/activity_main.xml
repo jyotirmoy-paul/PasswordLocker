@@ -3,7 +3,7 @@
     android:id="@+id/drawerLayout"
     android:fitsSystemWindows="true"
     tools:openDrawer="s"
-    tools:context=".MainActivity"
+    tools:context="paul.cipherresfeber.passwordlocker.MainActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
