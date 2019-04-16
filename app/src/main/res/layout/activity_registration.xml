@@ -25,8 +25,6 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="20dp"
             android:textSize="15sp"
             android:textColor="@color/colorPrimary"
             android:gravity="center"
@@ -34,13 +32,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
         <ImageView
             android:src="@drawable/login"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="250dp" />
+
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
 
         <TextView
-            android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:textSize="27sp"
             android:textColor="@color/colorPrimary"
@@ -51,7 +58,7 @@
 
         <LinearLayout
             android:background="@color/colorPrimary"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -77,7 +84,6 @@
 
         <LinearLayout
             android:background="@color/colorPrimary"
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -98,6 +104,21 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:id="@+id/txvPrivacyPolicy"
+            android:layout_marginBottom="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimaryDark"
+            android:gravity="center"
+            android:text="@string/privacy_policy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
         <Button
             android:textAllCaps="false"
             android:textSize="17sp"
@@ -114,8 +135,6 @@
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseException;
@@ -55,6 +56,17 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
             Button buttonGetOtp = findViewById(R.id.btnGetOtp);
             final EditText editTextUserPhoneNumber = findViewById(R.id.etUserPhoneNumber);
             final EditText editTextUserName = findViewById(R.id.etUserName);
+            TextView textViewPrivacyPolicy = findViewById(R.id.txvPrivacyPolicy);
+
+            // open the privacy policy link
+            textViewPrivacyPolicy.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://fir-credebit.firebaseapp.com/"));
+                    startActivity(intent);
+                }
+            });
 
             pd = new ProgressDialog(RegistrationActivity.this);
             pd.setCanceledOnTouchOutside(false);

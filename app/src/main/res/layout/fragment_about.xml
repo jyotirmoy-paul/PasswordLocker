@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:src="@drawable/about_me"
+            android:src="@drawable/about"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content" />
 
             <ImageView
-                android:src="@drawable/about"
+                android:src="@drawable/open_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

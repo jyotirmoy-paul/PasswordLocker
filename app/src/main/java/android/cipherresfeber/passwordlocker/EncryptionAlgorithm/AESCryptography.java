@@ -54,9 +54,11 @@ public class AESCryptography{
         StringBuilder modifiedPassword = new StringBuilder(password);
         int neededChars = KEY_SIZE - password.length();
 
-        // read from the key password file and get the developer side password
-        // combine the developer and user password to make a killer combination
-        // use the combined password to encrypt user data
+        /*
+        read from the key password file and get the developer side password
+        combine the developer and user password to make a killer combination
+        use the combined password to encrypt user data
+        */
 
         BufferedReader reader = null;
         try {

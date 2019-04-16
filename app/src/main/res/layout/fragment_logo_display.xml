@@ -17,17 +17,20 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp"
+        android:gravity="center"
         android:id="@+id/txvTagLine"
         android:textSize="17sp"
-        android:text="Feel the freedom in managing Passwords"
+        android:text="Focus on what you love, and we will focus on how to secure them"
         android:textColor="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <ImageView
-        android:id="@+id/imvLogoDisplay"
+        android:id="@+id/imvDrawableDisplay"
         android:layout_marginTop="50dp"
-        android:src="@drawable/launcher_logo"
+        android:src="@drawable/hobby"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
