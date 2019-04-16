@@ -100,8 +100,10 @@ public class AddPasswordFragment extends Fragment {
                 // encrypt the password and store to the firebase database
                 try {
                     String encryptionPassword = userSetEncryptionKey;
-                    AESCryptography.setKey(modifyUserPassword(encryptionPassword));
-                    password = AESCryptography.encrypt(password);
+                    password = AESCryptography.encrypt(
+                            password,
+                            AESCryptography.modifyPassword(encryptionPassword, getContext())
+                    );
 
                 } catch (Exception e){
                     Toast.makeText(getContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
@@ -187,19 +189,6 @@ public class AddPasswordFragment extends Fragment {
         });
 
         return view;
-    }
-
-    // utility method to modify the user password before fitting into the AES Cryptography
-    private String modifyUserPassword(String password){
-        int lengthOfPassword = password.length();
-        int charToGenerate = 16 - lengthOfPassword;
-
-        String modifiedPassword = password;
-        for(int i=0; i<charToGenerate; i++){
-            modifiedPassword += "P";
-        }
-
-        return modifiedPassword;
     }
 
 }

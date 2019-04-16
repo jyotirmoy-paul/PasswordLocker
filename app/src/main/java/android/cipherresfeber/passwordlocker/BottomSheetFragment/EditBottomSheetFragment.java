@@ -140,7 +140,7 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                     return;
                 }
 
-                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
+                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 32){
                     Toast.makeText(getContext(),
                             "Master Password of Invalid Length", Toast.LENGTH_SHORT).show();
                     editTextDecryptionPassword.setError("");
@@ -161,8 +161,10 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
                 progressDialog.show();
 
                 try{
-                    AESCryptography.setKey(modifyUserPassword(savedDecryptionPassword));
-                    String newEncryptedPassword = AESCryptography.encrypt(newPassword);
+                    String newEncryptedPassword = AESCryptography.encrypt(
+                            newPassword,
+                            AESCryptography.modifyPassword(savedDecryptionPassword, getContext())
+                    );
 
                     DateFormat dateFormat = new SimpleDateFormat("dd MMM yy");
 
@@ -199,19 +201,6 @@ public class EditBottomSheetFragment extends BottomSheetDialogFragment {
 
 
         return view;
-    }
-
-    // utility method to modify the user password before fitting into the AES Cryptography
-    private String modifyUserPassword(String password){
-        int lengthOfPassword = password.length();
-        int charToGenerate = 16 - lengthOfPassword;
-
-        String modifiedPassword = password;
-        for(int i=0; i<charToGenerate; i++){
-            modifiedPassword += UserConstants.EXTRA_CHARACTER_FOR_MODIFYING_MASTER_KEY;
-        }
-
-        return modifiedPassword;
     }
 
 }

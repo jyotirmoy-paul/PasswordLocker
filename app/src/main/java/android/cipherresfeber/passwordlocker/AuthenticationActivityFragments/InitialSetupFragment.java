@@ -121,8 +121,8 @@ public class InitialSetupFragment extends Fragment {
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
                 String confirmDecryptionPassword = editTextConfirmDecryptionPassword.getText().toString().trim();
 
-                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
-                    editTextDecryptionPassword.setError("7 - 16 chars only");
+                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 32){
+                    editTextDecryptionPassword.setError("7 - 32 chars only");
                     editTextDecryptionPassword.requestFocus();
                     return;
                 }

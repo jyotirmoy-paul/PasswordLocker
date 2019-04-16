@@ -30,8 +30,7 @@ public class InitialLogoDisplayFragment extends Fragment {
         textViewAppName.startAnimation(animation);
         textViewTagLine.startAnimation(animation);
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 

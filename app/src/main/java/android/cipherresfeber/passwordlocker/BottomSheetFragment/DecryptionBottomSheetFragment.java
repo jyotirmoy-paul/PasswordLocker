@@ -1,7 +1,6 @@
 package android.cipherresfeber.passwordlocker.BottomSheetFragment;
 
 import android.cipherresfeber.passwordlocker.Constants.DatabaseConstants;
-import android.cipherresfeber.passwordlocker.Constants.UserConstants;
 import android.cipherresfeber.passwordlocker.EncryptionAlgorithm.AESCryptography;
 import android.cipherresfeber.passwordlocker.R;
 import android.content.ClipData;
@@ -66,7 +65,7 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
             public void onClick(View v) {
 
                 String decryptionPassword = editTextDecryptionPassword.getText().toString().trim();
-                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 16){
+                if(decryptionPassword.length() < 7 || decryptionPassword.length() > 32){
                     Toast.makeText(getContext(),
                             "Master Password of Invalid Length", Toast.LENGTH_SHORT).show();
                     editTextDecryptionPassword.setError("");
@@ -76,8 +75,10 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
 
                 try{
                     // get the user password and use that to decrypt the "Stored Password"
-                    AESCryptography.setKey(modifyUserPassword(decryptionPassword));
-                    decryptedPassword = AESCryptography.decrypt(encryptedPassword);
+                    decryptedPassword = AESCryptography.decrypt(
+                            encryptedPassword,
+                            AESCryptography.modifyPassword(decryptionPassword, getContext())
+                    );
 
                     textViewPassword.setText(decryptedPassword);
                     headingOfBottomSheet.setText("-- Decrypted --");
@@ -127,19 +128,5 @@ public class DecryptionBottomSheetFragment extends BottomSheetDialogFragment {
             }, 20*1000); // invoke run method after 20 seconds
         }
     };
-
-    // utility method to modify the user password before fitting into the AES Cryptography
-    private String modifyUserPassword(String password){
-        int lengthOfPassword = password.length();
-        int charToGenerate = 16 - lengthOfPassword;
-
-        String modifiedPassword = password;
-        for(int i=0; i<charToGenerate; i++){
-            modifiedPassword += UserConstants.EXTRA_CHARACTER_FOR_MODIFYING_MASTER_KEY;
-        }
-
-        return modifiedPassword;
-    }
-
 
 }
