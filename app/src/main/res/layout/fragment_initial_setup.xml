@@ -165,6 +165,7 @@
             android:src="@drawable/ic_continue"
             android:layout_gravity="end"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:textColor="#fff"
             android:layout_width="45dp"
             android:layout_height="45dp"/>

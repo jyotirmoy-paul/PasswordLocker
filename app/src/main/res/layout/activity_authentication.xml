@@ -1,244 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="paul.cipherresfeber.passwordlocker.AuthenticationActivity">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-
-    <!-- General Screen Layout -->
-    <LinearLayout
-        android:id="@+id/linearLayoutGeneral"
-        android:background="#fff"
-        android:gravity="center"
-        android:visibility="visible"
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context="paul.cipherresfeber.passwordlocker.AuthenticationActivity">
 
-        <TextView
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:textSize="27sp"
-            android:text="Enter Locker PIN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <!-- General Screen Layout -->
+        <LinearLayout
+            android:id="@+id/linearLayoutGeneral"
+            android:background="#fff"
+            android:gravity="center"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_marginTop="30dp"
-            android:src="@drawable/app_lock"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
-
-        <GridLayout
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="40dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <View
-                android:id="@+id/viewFirstCircle"
-                android:layout_marginEnd="15dp"
-                android:layout_height="25dp"
-                android:layout_width="25dp"
-                android:background="@drawable/white_circular_bg" />
-
-            <View
-                android:id="@+id/viewSecondCircle"
-                android:layout_marginEnd="15dp"
-                android:layout_height="25dp"
-                android:layout_width="25dp"
-                android:background="@drawable/white_circular_bg" />
-
-            <View
-                android:id="@+id/viewThirdCircle"
-                android:layout_marginEnd="15dp"
-                android:layout_height="25dp"
-                android:layout_width="25dp"
-                android:background="@drawable/white_circular_bg" />
-
-            <View
-                android:id="@+id/viewFourthCircle"
-                android:layout_height="25dp"
-                android:layout_width="25dp"
-                android:background="@drawable/white_circular_bg" />
-
-        </GridLayout>
-
-        <TextView
-            android:id="@+id/txvEntryPasscodeStatus"
-            android:visibility="invisible"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:textColor="@android:color/holo_red_light"
-            android:layout_marginBottom="20dp"
-            android:text="Wrong Password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <GridLayout
-            android:orientation="horizontal"
-            android:columnCount="3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="1" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="2" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="3" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="4" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="5" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="6" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="7" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="8" />
-
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="9" />
-
-            <Button
-                android:onClick="numberButton"
+            <TextView
                 android:textStyle="bold"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="&#8592;" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="27sp"
+                android:text="Enter Locker PIN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-            <Button
-                android:onClick="numberButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="7dp"
-                android:textColor="#000"
-                android:background="#fff"
-                android:textSize="30sp"
-                android:text="0" />
+            <ImageView
+                android:layout_marginTop="30dp"
+                android:src="@drawable/app_lock"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+
+            <GridLayout
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/viewFirstCircle"
+                    android:layout_marginEnd="15dp"
+                    android:layout_height="25dp"
+                    android:layout_width="25dp"
+                    android:background="@drawable/white_circular_bg" />
+
+                <View
+                    android:id="@+id/viewSecondCircle"
+                    android:layout_marginEnd="15dp"
+                    android:layout_height="25dp"
+                    android:layout_width="25dp"
+                    android:background="@drawable/white_circular_bg" />
+
+                <View
+                    android:id="@+id/viewThirdCircle"
+                    android:layout_marginEnd="15dp"
+                    android:layout_height="25dp"
+                    android:layout_width="25dp"
+                    android:background="@drawable/white_circular_bg" />
+
+                <View
+                    android:id="@+id/viewFourthCircle"
+                    android:layout_height="25dp"
+                    android:layout_width="25dp"
+                    android:background="@drawable/white_circular_bg" />
+
+            </GridLayout>
+
+            <TextView
+                android:id="@+id/txvEntryPasscodeStatus"
+                android:visibility="invisible"
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:textColor="@android:color/holo_red_light"
+                android:layout_marginBottom="20dp"
+                android:text="Wrong Password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <GridLayout
+                android:orientation="horizontal"
+                android:columnCount="3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="1" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="2" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="3" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="4" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="5" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="6" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="7" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="8" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="9" />
+
+                <Button
+                    android:onClick="numberButton"
+                    android:textStyle="bold"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="&#8592;" />
+
+                <Button
+                    android:onClick="numberButton"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_margin="7dp"
+                    android:textColor="#000"
+                    android:background="#fff"
+                    android:textSize="30sp"
+                    android:text="0" />
 
 
-        </GridLayout>
+            </GridLayout>
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <!-- First time Screen Layout -->
-    <LinearLayout
-        android:background="#fff"
-        android:gravity="center"
-        android:visibility="gone"
-        android:orientation="vertical"
-        android:id="@+id/linearLayoutFirst"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <!-- First time Screen Layout -->
+        <LinearLayout
+            android:background="#fff"
+            android:gravity="center"
+            android:visibility="gone"
+            android:orientation="vertical"
+            android:id="@+id/linearLayoutFirst"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:textSize="27sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorPrimary"
-            android:text="Let's setup a few things"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="27sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="Let's setup a few things"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <ImageView
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/setup_wizard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/setup_wizard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/txvUserSecurityMessage"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textSize="17sp"
-            android:textColor="@color/colorPrimary"
-            android:text="Hello, Default\nYou are requested to set an app lock pin and decryption password in the next screen. Choose your pin wisely, as it will be the first line of defense."
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txvUserSecurityMessage"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimary"
+                android:text="Hello, Default\nYou are requested to set an app lock pin and decryption password in the next screen. Choose your pin wisely, as it will be the first line of defense."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
 
-        <ImageView
-            android:id="@+id/btnContinue"
-            android:layout_marginEnd="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_gravity="end"
-            android:src="@drawable/ic_continue"
-            android:layout_width="45dp"
-            android:layout_height="45dp" />
+            <ImageView
+                android:id="@+id/btnContinue"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="end"
+                android:src="@drawable/ic_continue"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-    <!-- Layout for settings up initial things -->
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        <!-- Layout for settings up initial things -->
+        <FrameLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>
