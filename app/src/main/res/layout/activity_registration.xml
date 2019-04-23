@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    android:scrollbars="none"
+<ScrollView android:scrollbars="none"
     android:fillViewport="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:local="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -89,9 +89,16 @@
             </LinearLayout>
 
             <LinearLayout
+                android:gravity="center"
+                android:orientation="horizontal"
                 android:background="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <Spinner
+                    android:id="@+id/spinnerCountryCode"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"/>
 
                 <EditText
                     android:inputType="phone"

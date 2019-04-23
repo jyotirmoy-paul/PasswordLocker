@@ -3,6 +3,7 @@ package paul.cipherresfeber.passwordlocker;
 import android.app.ProgressDialog;
 
 
+import paul.cipherresfeber.passwordlocker.Constants.CountryCodes;
 import paul.cipherresfeber.passwordlocker.RegistrationActivityFragments.OtpFragment;
 import android.content.Intent;
 import android.net.Uri;
@@ -11,8 +12,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +55,7 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
 
             Button buttonGetOtp = findViewById(R.id.btnGetOtp);
             final EditText editTextUserPhoneNumber = findViewById(R.id.etUserPhoneNumber);
+            final Spinner spinnerCountryCode = findViewById(R.id.spinnerCountryCode);
             final EditText editTextUserName = findViewById(R.id.etUserName);
             TextView textViewPrivacyPolicy = findViewById(R.id.txvPrivacyPolicy);
 
@@ -64,6 +68,11 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
                     startActivity(intent);
                 }
             });
+
+            // load country codes to spinner
+            spinnerCountryCode.setAdapter(
+                    new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, CountryCodes.countryNames));
+
 
             pd = new ProgressDialog(RegistrationActivity.this);
             pd.setCanceledOnTouchOutside(false);
@@ -83,16 +92,19 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
                         return;
                     }
 
-                    if(userPhoneNumber.length() != 10){
-                        editTextUserPhoneNumber.setError("10 digits only");
+                    if(userPhoneNumber.isEmpty()){
+                        editTextUserPhoneNumber.setError("Can't be empty");
                         editTextUserPhoneNumber.requestFocus();
                         return;
                     }
 
+                    String phoneAreaCode = CountryCodes
+                            .countryAreaCodes[spinnerCountryCode.getSelectedItemPosition()];
+
                     setUpVerificationCallbacks();
 
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                            "+91" + userPhoneNumber,
+                            "+" + phoneAreaCode + userPhoneNumber,
                             60,
                             TimeUnit.SECONDS,
                             RegistrationActivity.this,
@@ -120,7 +132,7 @@ public class RegistrationActivity extends AppCompatActivity implements OtpFragme
             public void onVerificationFailed(FirebaseException e) {
                 pd.cancel();
                 Toast.makeText(RegistrationActivity.this,
-                        "Something went wrong!", Toast.LENGTH_SHORT).show();
+                        "Invalid number/country code!", Toast.LENGTH_SHORT).show();
                 Log.i("RegistrationActivity", e.getMessage());
             }
 
