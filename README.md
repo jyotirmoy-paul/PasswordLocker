@@ -1,9 +1,19 @@
 # Password Locker
 Locker for storing passwords securely (using AES Algorithm) locally as well as on cloud.
+
 ## Live on Play Store
 The final app can be found on Play Store: [Password Locker](https://play.google.com/store/apps/details?id=paul.cipherresfeber.passwordlocker)
+
+## Sample Screenshots
+<p align="center">
+  <img align="left" src="https://github.com/jyotirmoy-paul/PasswordLocker/blob/master/samples/screenshot1.png" width=250>
+  <img src="https://github.com/jyotirmoy-paul/PasswordLocker/blob/master/samples/screenshot2.png" width=250>
+  <img align="right" src="https://github.com/jyotirmoy-paul/PasswordLocker/blob/master/samples/screenshot3.png" width=250>
+</p>
+
 ## Getting Started
 The following instuctions will get you a copy of the project up and running on your local machine for development and testing purpose.
+
 ### Prerequisites
 What things you need to install the software
 ```
@@ -55,12 +65,15 @@ service cloud.firestore {
 4. For Authentication, "Phone" in Firebase should be enabled and also add your SHA1 certificate to firebase
 ### Installing the App
 Import the app to Android Studio, build the project and finally deploy it in a device (or emulator).
+
 ## Main Highlights:
 1. Encrypted Password Storage
 2. Inbuilt App Lock
 3. Clean and Easy to use UI
 4. Open Source Project
+
 ##  Build With
 * [Google Firebase](https://firebase.google.com/)
+
 ## Authors
 * **Jyotirmoy Paul** - Initial work - [jyotirmoy-paul](https://github.com/jyotirmoy-paul)
