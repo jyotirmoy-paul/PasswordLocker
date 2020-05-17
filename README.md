@@ -1,10 +1,7 @@
 # Password Locker
 Locker for storing passwords securely (using AES Algorithm) locally as well as on cloud.
 
-## Live on Play Store
-The final app can be found on Play Store: [Password Locker](https://play.google.com/store/apps/details?id=paul.cipherresfeber.passwordlocker)
-
-## Sample Screenshots
+## App Screenshots
 <p align="center">
   <img align="left" src="https://github.com/jyotirmoy-paul/PasswordLocker/blob/master/samples/screenshot1.png" width=250>
   <img src="https://github.com/jyotirmoy-paul/PasswordLocker/blob/master/samples/screenshot2.png" width=250>
