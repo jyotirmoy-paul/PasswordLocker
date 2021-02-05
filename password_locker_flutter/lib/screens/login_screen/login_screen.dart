@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:passwordlocker/dialogs/login_screen_dialog.dart';
+import 'package:passwordlocker/screens/login_screen/login_screen_dialog.dart';
 import 'package:passwordlocker/utils/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
