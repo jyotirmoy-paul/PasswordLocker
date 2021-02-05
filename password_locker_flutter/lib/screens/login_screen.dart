@@ -56,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   children: [
                     TextSpan(
-                      text: 'Maintained by',
+                      text: 'Maintained by ',
                     ),
                     TextSpan(
                       style: TextStyle(

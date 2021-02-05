@@ -2,6 +2,9 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 
 enum LoginScreenDialogState {
@@ -30,10 +33,35 @@ class LoginScreenDialog extends StatelessWidget {
         phoneNumber,
       );
 
+      Provider.of<ValueNotifier<ConfirmationResult>>(context, listen: false)
+          .value = result;
+
       log('OTP send to $phoneNumber, Verification ID: ${result.verificationId}');
       setState(LoginScreenDialogState.SUCCESS, context);
     } catch (e) {
       log('error: $e');
+      setState(LoginScreenDialogState.ERROR, context);
+    }
+  }
+
+  void _onOtpSubmit(BuildContext context, String otp) async {
+    ConfirmationResult confirmationResult =
+        Provider.of<ValueNotifier<ConfirmationResult>>(
+      context,
+      listen: false,
+    ).value;
+
+    if (confirmationResult == null) return;
+
+    setState(LoginScreenDialogState.LOADING, context);
+
+    try {
+      UserCredential userCredential = await confirmationResult.confirm(otp);
+      log('LOGIN SUCCESS: $userCredential');
+
+      // close the dialog
+      Navigator.pop(context);
+    } catch (_) {
       setState(LoginScreenDialogState.ERROR, context);
     }
   }
@@ -106,10 +134,45 @@ class LoginScreenDialog extends StatelessWidget {
         ],
       );
 
-  Widget _buildBottomChild(LoginScreenDialogState state) {
+  // FIXME: NOT VERTICALLY CENTERED
+  Widget _buildOTPWidget(BuildContext context) => Container(
+        margin: EdgeInsets.only(
+          top: 10.0,
+        ),
+        child: PinCodeTextField(
+          inputFormatters: [
+            FilteringTextInputFormatter.digitsOnly,
+          ],
+          textStyle: TextStyle(
+            fontSize: 15.0,
+          ),
+          keyboardType: TextInputType.number,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          appContext: context,
+          length: 6,
+          obscureText: false,
+          animationType: AnimationType.fade,
+          pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(5),
+            activeFillColor: Colors.white,
+          ),
+          animationDuration: Duration(milliseconds: 300),
+          enableActiveFill: true,
+          onCompleted: (otp) => _onOtpSubmit(context, otp),
+          onChanged: (s) {},
+          beforeTextPaste: (text) => false,
+        ),
+      );
+
+  Widget _buildBottomChild(
+    LoginScreenDialogState state, {
+    BuildContext context,
+  }) {
     switch (state) {
       case LoginScreenDialogState.LOADING:
         return Align(
+          key: ValueKey('LOADING'),
           alignment: Alignment.center,
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),
@@ -117,10 +180,11 @@ class LoginScreenDialog extends StatelessWidget {
         );
 
       case LoginScreenDialogState.SUCCESS:
-        return Container();
+        return _buildOTPWidget(context);
 
       case LoginScreenDialogState.ERROR:
         return Align(
+          key: ValueKey('ERROR'),
           alignment: Alignment.center,
           child: Text(
             'Something went wrong',
@@ -132,13 +196,20 @@ class LoginScreenDialog extends StatelessWidget {
         );
     }
 
-    return Container();
+    return const SizedBox.shrink();
   }
 
   @override
   Widget build(BuildContext _) {
-    return ListenableProvider<ValueNotifier<LoginScreenDialogState>>(
-      create: (_) => ValueNotifier<LoginScreenDialogState>(null),
+    return MultiProvider(
+      providers: [
+        ListenableProvider(
+          create: (_) => ValueNotifier<LoginScreenDialogState>(null),
+        ),
+        ListenableProvider(
+          create: (_) => ValueNotifier<ConfirmationResult>(null),
+        ),
+      ],
       builder: (BuildContext context, _) => Dialog(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.50,
@@ -174,7 +245,10 @@ class LoginScreenDialog extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       vertical: 10.0,
                     ),
-                    child: _buildBottomChild(vnDialogState.value),
+                    child: _buildBottomChild(
+                      vnDialogState.value,
+                      context: context,
+                    ),
                   ),
                 ),
               ),
