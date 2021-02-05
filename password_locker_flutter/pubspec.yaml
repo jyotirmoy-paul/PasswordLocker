@@ -32,6 +32,7 @@ dependencies:
   # utils
   url_launcher: ^5.7.10
   json_serializable: ^3.5.1
+  clipboard: ^0.1.2+8
 
   # UI
   pin_code_fields: ^6.1.0

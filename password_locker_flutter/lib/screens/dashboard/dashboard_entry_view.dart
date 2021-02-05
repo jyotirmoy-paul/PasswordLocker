@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:passwordlocker/models/password_model.dart';
@@ -59,6 +60,12 @@ class DashboardEntryView extends StatelessWidget {
   }) {
     switch (state) {
       case DashboardEntryViewState.PASSWORD:
+        final String password = Provider.of<ValueNotifier<String>>(
+              context,
+              listen: false,
+            ).value?.trim() ??
+            '';
+
         return Row(
           children: [
             IconButton(
@@ -66,19 +73,13 @@ class DashboardEntryView extends StatelessWidget {
                 Icons.copy,
                 color: Colors.green,
               ),
-              onPressed: () => () {
-                // TODO: COPY TO CLIPBOARD
-              },
+              onPressed: () => FlutterClipboard.copy(password),
             ),
             const SizedBox(
               width: 10.0,
             ),
             Text(
-              Provider.of<ValueNotifier<String>>(
-                    context,
-                    listen: false,
-                  ).value?.trim() ??
-                  '',
+              password,
               style: TextStyle(
                 color: Colors.green,
                 fontSize: 20.0,

@@ -1,6 +1,8 @@
 const String kProjectGithubLink =
     'https://github.com/jyotirmoy-paul/PasswordLocker';
 
+const kDeveloperPassword = r'5Br?$ds4H@!UU2$2;%^bz+';
+
 const String kAuthenticateImage = 'assets/images/authenticate.png';
 const String kSetupWidgetImage = 'assets/images/setup_widget.png';
 const String kSynchronizedPasswordsImage =

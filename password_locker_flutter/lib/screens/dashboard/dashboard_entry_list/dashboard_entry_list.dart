@@ -45,7 +45,15 @@ class DashboardEntryList extends StatelessWidget {
       );
 
   Widget _emptyList() => Center(
-        child: Container(),
+        child: Text(
+          "You don't have any passwords yet\n\nAdding one is as easy as 1 + 2 x 3 = 7 ...or 9?",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.blueAccent,
+            fontSize: 20.0,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
       );
 
   Widget _buildPasswordEntryItem(PasswordModel model, BuildContext context) =>
