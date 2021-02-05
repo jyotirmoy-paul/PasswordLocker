@@ -1,5 +1,8 @@
-import 'dart:developer';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'password_model.g.dart';
+
+@JsonSerializable()
 class PasswordModel {
   String firebaseKey;
   String lastUpdatedDate;
@@ -15,7 +18,8 @@ class PasswordModel {
     this.serviceProvider,
   });
 
-  factory PasswordModel.fromJson(Map<String, dynamic> data) {
-    return PasswordModel();
-  }
+  factory PasswordModel.fromJson(Map<String, dynamic> data) =>
+      _$PasswordModelFromJson(data);
+
+  Map<String, dynamic> toJson() => _$PasswordModelToJson(this);
 }
