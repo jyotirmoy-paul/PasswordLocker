@@ -15,7 +15,7 @@ class Dashboard extends StatelessWidget {
             child: DashboardEntryList(),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: DashboardEntryView(),
           ),
         ],

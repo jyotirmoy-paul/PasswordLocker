@@ -13,6 +13,7 @@ class DashboardEntryList extends StatelessWidget {
   void _addNewPassword() {}
 
   AppBar _buildAppBar() => AppBar(
+        backgroundColor: Colors.blueAccent,
         centerTitle: true,
         actions: [
           IconButton(
@@ -135,6 +136,7 @@ class DashboardEntryList extends StatelessWidget {
     BuildContext context,
   ) =>
       ListView(
+        physics: BouncingScrollPhysics(),
         children: passwordModels
             .map((model) => _buildPasswordEntryItem(model, context))
             .toList(),
@@ -152,9 +154,6 @@ class DashboardEntryList extends StatelessWidget {
       body: StreamBuilder(
         stream: PasswordManagement.getPasswords(),
         builder: (_, snapshot) {
-          log('dashboard_entry_list : snapshot.error: ${snapshot.error}');
-          log('dashboard_entry_list : snapshot.data: ${snapshot.data}');
-
           if (snapshot.connectionState == ConnectionState.waiting)
             return Center(child: CircularProgressIndicator());
 
