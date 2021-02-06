@@ -58,17 +58,32 @@ class DashboardEntryList extends StatelessWidget {
         ),
       );
 
-  Widget _emptyList() => Center(
-        child: Text(
-          "You don't have any passwords yet\n\nAdding one is as easy as 1 + 2 x 3 = 7 ...or 9?",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: 20.0,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      );
+  Widget _emptyWidget({
+    bool searchEmpty = false,
+  }) =>
+      searchEmpty
+          ? Center(
+              child: Text(
+                'We tried hard, but nothing matched your search\n\n:-(',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.redAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            )
+          : Center(
+              child: Text(
+                "You don't have any passwords yet\n\nAdding one is as easy as 1 + 2 x 3 = 7 ...or 9?",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            );
 
   Widget _buildPasswordEntryItem(PasswordModel model, BuildContext context) =>
       InkWell(
@@ -186,9 +201,78 @@ class DashboardEntryList extends StatelessWidget {
             );
 
           List<PasswordModel> passwordModels = snapshot.data;
-          if (passwordModels.isEmpty) return _emptyList();
+          if (passwordModels.isEmpty) return _emptyWidget();
 
-          return _buildListView(passwordModels, context);
+          return ListenableProvider<ValueNotifier<String>>(
+            create: (_) => ValueNotifier<String>(''),
+            builder: (context, _) => Column(
+              children: [
+                /* text field to allow searching among the passwords */
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 10.0,
+                  ),
+                  child: TextField(
+                    onChanged: (String s) => Provider.of<ValueNotifier<String>>(
+                      context,
+                      listen: false,
+                    ).value = s,
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 20.0,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Search in your passwords',
+                      hintStyle: TextStyle(
+                        color: Colors.blue.withOpacity(
+                          0.70,
+                        ),
+                      ),
+                      prefixIcon: Icon(
+                        Icons.search,
+                        color: Colors.blue,
+                        size: 28.0,
+                      ),
+                    ),
+                  ),
+                ),
+
+                /* show list of passwords */
+
+                Flexible(
+                  child: Consumer<ValueNotifier<String>>(
+                    builder: (_, vnQuery, __) {
+                      List<PasswordModel> _filteredList = <PasswordModel>[];
+                      String query = vnQuery.value.toLowerCase();
+
+                      if (query.isNotEmpty) {
+                        for (PasswordModel model in passwordModels) {
+                          if (model.serviceProvider
+                                  .toLowerCase()
+                                  .contains(query) ||
+                              model.loginId.toLowerCase().contains(query))
+                            _filteredList.add(model);
+                        }
+                      } else {
+                        _filteredList.addAll(passwordModels);
+                      }
+
+                      if (_filteredList.isEmpty)
+                        return _emptyWidget(
+                          searchEmpty: true,
+                        );
+
+                      return _buildListView(
+                        _filteredList,
+                        context,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );
