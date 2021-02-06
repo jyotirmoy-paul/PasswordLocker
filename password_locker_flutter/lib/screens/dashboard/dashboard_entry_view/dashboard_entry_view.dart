@@ -169,11 +169,13 @@ class DashboardEntryView extends StatelessWidget {
             const SizedBox(
               width: 10.0,
             ),
-            Text(
-              password,
-              style: TextStyle(
-                color: Colors.green,
-                fontSize: 20.0,
+            Flexible(
+              child: SelectableText(
+                password,
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 20.0,
+                ),
               ),
             ),
             const SizedBox(
@@ -181,7 +183,7 @@ class DashboardEntryView extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(
-                Icons.block,
+                Icons.visibility_off,
                 color: Colors.red,
               ),
               onPressed: () => _setState(null, context),
@@ -350,19 +352,33 @@ class DashboardEntryView extends StatelessWidget {
 
                       /* username */
                       Text(
-                        model.loginId ?? 'login ID',
+                        'Login ID',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.80),
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      SelectableText(
+                        model.loginId,
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 20.0,
                         ),
                       ),
                       const SizedBox(
-                        height: 5.0,
+                        height: 10.0,
                       ),
 
                       /* encrypted password / password */
                       Text(
-                        model.password.trim() ?? 'password',
+                        'Encrypted Password',
+                        style: TextStyle(
+                          color: Colors.black.withOpacity(0.80),
+                          fontSize: 15.0,
+                        ),
+                      ),
+                      Text(
+                        model.password.trim(),
                         style: TextStyle(
                           color: Colors.redAccent,
                           fontSize: 20.0,

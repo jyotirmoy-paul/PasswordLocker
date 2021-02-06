@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:passwordlocker/models/password_addition_model.dart';
 import 'package:passwordlocker/models/password_model.dart';
