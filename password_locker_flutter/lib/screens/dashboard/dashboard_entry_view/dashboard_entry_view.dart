@@ -67,6 +67,7 @@ class DashboardEntryView extends StatelessWidget {
             '';
 
         return Row(
+          key: ValueKey(DashboardEntryViewState.PASSWORD),
           children: [
             IconButton(
               icon: Icon(
@@ -85,14 +86,27 @@ class DashboardEntryView extends StatelessWidget {
                 fontSize: 20.0,
               ),
             ),
+            const SizedBox(
+              width: 10.0,
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.block,
+                color: Colors.red,
+              ),
+              onPressed: () => _setState(null, context),
+            ),
           ],
         );
+
       case DashboardEntryViewState.PROMPT:
         String enteredKey = '';
         return Row(
+          key: ValueKey(DashboardEntryViewState.PROMPT),
           children: [
             Flexible(
               child: TextField(
+                obscureText: true,
                 style: TextStyle(
                   color: Colors.blue,
                   fontSize: 20.0,
@@ -154,15 +168,18 @@ class DashboardEntryView extends StatelessWidget {
             ),
           ],
         );
+
       case DashboardEntryViewState.ERROR:
         return Row(
+          key: ValueKey(DashboardEntryViewState.ERROR),
           children: [
             IconButton(
               icon: Icon(
                 Icons.repeat,
                 color: Colors.red,
               ),
-              onPressed: () => _setState(null, context),
+              onPressed: () =>
+                  _setState(DashboardEntryViewState.PROMPT, context),
             ),
             const SizedBox(
               width: 10.0,
@@ -288,7 +305,6 @@ class DashboardEntryView extends StatelessWidget {
                         create: (_) => ValueNotifier<DashboardEntryViewState>(
                           null,
                         ),
-                        key: ValueKey(model),
                         builder: (context, _) =>
                             Consumer<ValueNotifier<DashboardEntryViewState>>(
                           builder: (_, vnState, __) => AnimatedSwitcher(
@@ -301,15 +317,21 @@ class DashboardEntryView extends StatelessWidget {
                             ),
                             duration: const Duration(milliseconds: 500),
                             child: Padding(
+                              key: ValueKey(model),
                               padding: const EdgeInsets.symmetric(
                                 vertical: 10.0,
                               ),
                               child: ListenableProvider<ValueNotifier<String>>(
                                 create: (_) => ValueNotifier<String>(null),
-                                builder: (context, _) => _buildBottomView(
-                                  vnState.value,
-                                  context,
-                                  passwordModel: model,
+                                builder: (context, _) => AnimatedSwitcher(
+                                  switchInCurve: Curves.easeInOut,
+                                  switchOutCurve: Curves.easeInOut,
+                                  duration: const Duration(milliseconds: 200),
+                                  child: _buildBottomView(
+                                    vnState.value,
+                                    context,
+                                    passwordModel: model,
+                                  ),
                                 ),
                               ),
                             ),

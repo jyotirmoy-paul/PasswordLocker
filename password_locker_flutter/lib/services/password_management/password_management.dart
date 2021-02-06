@@ -13,7 +13,6 @@ class PasswordManagement {
 
     int neededChars = 32 - basePassword.length;
     for (int i = 0; i < neededChars; i++) basePassword += kDeveloperPassword[i];
-    log('modified password: $basePassword');
     return basePassword;
   }
 
@@ -37,7 +36,6 @@ class PasswordManagement {
   }) {
     assert(cipherText != null);
     assert(key != null);
-    log('password_management : cipherText: ${cipherText.trim()} : key: $key');
 
     final encKey = Key.fromUtf8(_getModifiedPassword(key));
     final encIV = iv == null ? null : IV.fromUtf8(iv);

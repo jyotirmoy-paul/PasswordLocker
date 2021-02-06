@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:passwordlocker/models/password_addition_model.dart';
 import 'package:passwordlocker/screens/dashboard/dashboard_entry_list/input_master_password_dialog.dart';
 import 'package:passwordlocker/services/database/database.dart';
+import 'package:provider/provider.dart';
 
 class AddPasswordDialog extends StatelessWidget {
   final PasswordAdditionModel _passwordAdditionModel = PasswordAdditionModel();
@@ -37,6 +38,7 @@ class AddPasswordDialog extends StatelessWidget {
     @required String hintText,
     @required IconData prefixIcon,
     @required Function(String) onChanged,
+    bool visibilityStateChangeReq = false,
   }) =>
       Container(
         margin: EdgeInsets.symmetric(
@@ -57,21 +59,62 @@ class AddPasswordDialog extends StatelessWidget {
             const SizedBox(
               height: 5.0,
             ),
-            TextField(
-              onChanged: onChanged,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.blue,
+
+            /* this value notifier holds the variable - obscureText */
+            ListenableProvider<ValueNotifier<bool>>(
+              create: (_) => ValueNotifier(true),
+              builder: (context, _) => Row(
+                children: [
+                  Flexible(
+                    child: Consumer<ValueNotifier<bool>>(
+                      builder: (_, vnObscureText, __) => TextField(
+                        obscureText: vnObscureText.value,
+                        onChanged: onChanged,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Colors.red,
+                            ),
+                          ),
+                          hintText: hintText,
+                          prefixIcon: Icon(prefixIcon),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.red,
-                  ),
-                ),
-                hintText: hintText,
-                prefixIcon: Icon(prefixIcon),
+                  visibilityStateChangeReq
+                      ? const SizedBox(
+                          width: 10.0,
+                        )
+                      : const SizedBox.shrink(),
+                  visibilityStateChangeReq
+                      ? Consumer<ValueNotifier<bool>>(
+                          builder: (_, vnObscureText, __) => IconButton(
+                            icon: Icon(
+                              vnObscureText.value
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: vnObscureText.value
+                                  ? Colors.red
+                                  : Colors.green,
+                            ),
+                            onPressed: () {
+                              ValueNotifier<bool> vn =
+                                  Provider.of<ValueNotifier<bool>>(
+                                context,
+                                listen: false,
+                              );
+                              vn.value = !vn.value;
+                            },
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
               ),
             ),
           ],
@@ -112,6 +155,7 @@ class AddPasswordDialog extends StatelessWidget {
               hintText: 'Password',
               prefixIcon: Icons.lock,
               onChanged: (String s) => _passwordAdditionModel.password = s,
+              visibilityStateChangeReq: true,
             ),
             const SizedBox(
               height: 30.0,

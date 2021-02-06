@@ -29,15 +29,12 @@ class Backend {
       serviceProvider: passwordAdditionModel.serviceProvider,
     );
 
-    log('passwordModel : ${passwordModel.toJson()}');
-
     return docRef.set(passwordModel.toJson());
   }
 
   static Stream<List<PasswordModel>> getPasswords() =>
       _getReference().snapshots().map<List<PasswordModel>>(
         (querySnapshot) {
-          log('querySnapshot: $querySnapshot');
           return querySnapshot.docs
               .map<PasswordModel>((queryDocumentSnapshot) =>
                   PasswordModel.fromJson(queryDocumentSnapshot.data()))
