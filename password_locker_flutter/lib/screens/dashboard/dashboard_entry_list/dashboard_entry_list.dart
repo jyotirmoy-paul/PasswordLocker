@@ -3,14 +3,28 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:passwordlocker/models/password_addition_model.dart';
 import 'package:passwordlocker/models/password_model.dart';
+import 'package:passwordlocker/screens/dashboard/dashboard_entry_list/add_password_dialog.dart';
+import 'package:passwordlocker/services/backend/backend.dart';
 import 'package:passwordlocker/services/password_management/password_management.dart';
 import 'package:provider/provider.dart';
 
 class DashboardEntryList extends StatelessWidget {
   void _signOut() => FirebaseAuth.instance.signOut();
 
-  void _addNewPassword() {}
+  void _addNewPassword(BuildContext context) async {
+    PasswordAdditionModel passwordAdditionModel =
+        await showDialog<PasswordAdditionModel>(
+      context: context,
+      builder: (_) => AddPasswordDialog(),
+    );
+
+    if (passwordAdditionModel == null) return;
+
+    await PasswordManagement.encodeEncryption(passwordAdditionModel);
+    await Backend.savePassword(passwordAdditionModel);
+  }
 
   AppBar _buildAppBar() => AppBar(
         backgroundColor: Colors.blueAccent,
@@ -156,11 +170,11 @@ class DashboardEntryList extends StatelessWidget {
       backgroundColor: Colors.blue.shade50,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: _addNewPassword,
+        onPressed: () => _addNewPassword(context),
       ),
       appBar: _buildAppBar(),
       body: StreamBuilder(
-        stream: PasswordManagement.getPasswords(),
+        stream: Backend.getPasswords(),
         builder: (_, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting)
             return Center(child: CircularProgressIndicator());

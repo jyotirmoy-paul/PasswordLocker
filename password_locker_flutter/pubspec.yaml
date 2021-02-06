@@ -33,6 +33,10 @@ dependencies:
   url_launcher: ^5.7.10
   json_serializable: ^3.5.1
   clipboard: ^0.1.2+8
+  intl: ^0.16.1
+
+  # database
+  hive: ^1.4.4+1
 
   # UI
   pin_code_fields: ^6.1.0
