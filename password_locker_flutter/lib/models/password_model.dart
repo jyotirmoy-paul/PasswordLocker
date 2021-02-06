@@ -21,5 +21,13 @@ class PasswordModel {
   factory PasswordModel.fromJson(Map<String, dynamic> data) =>
       _$PasswordModelFromJson(data);
 
+  factory PasswordModel.copy(PasswordModel other) => PasswordModel(
+        firebaseKey: other.firebaseKey,
+        lastUpdatedDate: other.lastUpdatedDate,
+        loginId: other.loginId,
+        password: other.password,
+        serviceProvider: other.serviceProvider,
+      );
+
   Map<String, dynamic> toJson() => _$PasswordModelToJson(this);
 }

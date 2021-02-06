@@ -1,20 +1,110 @@
+import 'dart:developer' as dev;
 import 'dart:math';
 
 import 'package:clipboard/clipboard.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:passwordlocker/models/password_addition_model.dart';
 import 'package:passwordlocker/models/password_model.dart';
+import 'package:passwordlocker/screens/dashboard/dashboard_entry_list/add_password_dialog.dart';
+import 'package:passwordlocker/services/backend/backend.dart';
+import 'package:passwordlocker/services/database/database.dart';
 import 'package:passwordlocker/services/password_management/password_management.dart';
 import 'package:passwordlocker/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 enum DashboardEntryViewState {
   PASSWORD,
-  PROMPT,
   ERROR,
 }
 
 class DashboardEntryView extends StatelessWidget {
+  void _onDeletePress(PasswordModel passwordModel, BuildContext context) async {
+    // ask for confirmation
+
+    bool confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => Dialog(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20.0,
+            vertical: 10.0,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Are you sure you don\'t need this password anymore?',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20.0,
+                ),
+              ),
+              const SizedBox(
+                height: 20.0,
+              ),
+              MaterialButton(
+                color: Colors.red,
+                onPressed: () => Navigator.pop(context, true),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                    vertical: 10.0,
+                  ),
+                  child: Text(
+                    'Confirm',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+
+    if (confirm == null || confirm == false) return;
+
+    await Backend.deletePassword(passwordModel);
+
+    // set the current view to null
+    Provider.of<ValueNotifier<PasswordModel>>(
+      context,
+      listen: false,
+    ).value = null;
+  }
+
+  void _onEditPress(PasswordModel pm, BuildContext context) async {
+    PasswordModel passwordModel = PasswordModel.copy(pm);
+
+    /* this dialog directly mutates on the password model */
+    PasswordAdditionModel passwordAdditionModel =
+        await showDialog<PasswordAdditionModel>(
+      context: context,
+      builder: (_) => AddPasswordDialog(
+        passwordAdditionModel: PasswordAdditionModel(
+          serviceProvider: passwordModel.serviceProvider,
+          loginID: passwordModel.loginId,
+        ),
+      ),
+    );
+
+    if (passwordAdditionModel == null) return;
+
+    await PasswordManagement.encodeEncryption(passwordAdditionModel);
+
+    // todo: shall we allow other changes (phone number / service provider) ?
+    passwordModel.password = passwordAdditionModel.password;
+
+    await Backend.editPassword(passwordModel);
+    Provider.of<ValueNotifier<PasswordModel>>(
+      context,
+      listen: false,
+    ).value = passwordModel;
+  }
+
   void _setState(
     DashboardEntryViewState state,
     BuildContext context,
@@ -99,76 +189,6 @@ class DashboardEntryView extends StatelessWidget {
           ],
         );
 
-      case DashboardEntryViewState.PROMPT:
-        String enteredKey = '';
-        return Row(
-          key: ValueKey(DashboardEntryViewState.PROMPT),
-          children: [
-            Flexible(
-              child: TextField(
-                obscureText: true,
-                style: TextStyle(
-                  color: Colors.blue,
-                  fontSize: 20.0,
-                ),
-                onChanged: (String s) => enteredKey = s,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.blue,
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.red,
-                    ),
-                  ),
-                  hintText: 'Master Password',
-                  hintStyle: TextStyle(
-                    color: Colors.blue.withOpacity(0.70),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-            MaterialButton(
-              color: Colors.green,
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                  vertical: 10.0,
-                ),
-                child: Text(
-                  'Decrypt',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                  ),
-                ),
-              ),
-              onPressed: () {
-                try {
-                  String decryptedPassword = PasswordManagement.decryptPassword(
-                    cipherText: passwordModel.password,
-                    key: enteredKey,
-                  );
-
-                  Provider.of<ValueNotifier<String>>(
-                    context,
-                    listen: false,
-                  ).value = decryptedPassword;
-                  _setState(DashboardEntryViewState.PASSWORD, context);
-                } catch (e) {
-                  print('dashboard_entry_view : error : $e');
-                  _setState(DashboardEntryViewState.ERROR, context);
-                }
-              },
-            ),
-          ],
-        );
-
       case DashboardEntryViewState.ERROR:
         return Row(
           key: ValueKey(DashboardEntryViewState.ERROR),
@@ -178,8 +198,10 @@ class DashboardEntryView extends StatelessWidget {
                 Icons.repeat,
                 color: Colors.red,
               ),
-              onPressed: () =>
-                  _setState(DashboardEntryViewState.PROMPT, context),
+              onPressed: () => _setState(
+                null,
+                context,
+              ),
             ),
             const SizedBox(
               width: 10.0,
@@ -195,30 +217,79 @@ class DashboardEntryView extends StatelessWidget {
         );
     }
 
-    return MaterialButton(
-      color: Colors.green,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 20.0,
-          vertical: 10.0,
-        ),
-        child: Text(
-          'Show',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
+    String enteredKey = '';
+    return Row(
+      key: ValueKey('prompt'),
+      children: [
+        Flexible(
+          child: TextField(
+            obscureText: true,
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 20.0,
+            ),
+            onChanged: (String s) => enteredKey = s,
+            decoration: InputDecoration(
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.blue,
+                ),
+              ),
+              border: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Colors.red,
+                ),
+              ),
+              hintText: 'Master Password',
+              hintStyle: TextStyle(
+                color: Colors.blue.withOpacity(0.70),
+              ),
+            ),
           ),
         ),
-      ),
-      onPressed: () => _setState(
-        DashboardEntryViewState.PROMPT,
-        context,
-      ),
+        const SizedBox(
+          width: 10.0,
+        ),
+        MaterialButton(
+          color: Colors.green,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 10.0,
+            ),
+            child: Text(
+              'Decrypt',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+          onPressed: () {
+            try {
+              String decryptedPassword = PasswordManagement.decryptPassword(
+                cipherText: passwordModel.password,
+                key: enteredKey,
+              );
+
+              Provider.of<ValueNotifier<String>>(
+                context,
+                listen: false,
+              ).value = decryptedPassword;
+              _setState(DashboardEntryViewState.PASSWORD, context);
+            } catch (e) {
+              print('dashboard_entry_view : error : $e');
+              _setState(DashboardEntryViewState.ERROR, context);
+            }
+          },
+        ),
+      ],
     );
   }
 
   Widget _buildPasswordViewWidget(PasswordModel model, BuildContext context) =>
       Padding(
+        key: ValueKey(model),
         padding: const EdgeInsets.symmetric(
           horizontal: 20.0,
         ),
@@ -230,7 +301,7 @@ class DashboardEntryView extends StatelessWidget {
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.blueAccent.withOpacity(0.10),
+              color: Colors.blue.withOpacity(0.10),
               borderRadius: BorderRadius.circular(10.0),
             ),
             padding: const EdgeInsets.symmetric(
@@ -337,6 +408,34 @@ class DashboardEntryView extends StatelessWidget {
                             ),
                           ),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+
+                      /* edit and delete buttons */
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () => _onEditPress(model, context),
+                            icon: Icon(
+                              Icons.edit,
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20.0,
+                          ),
+                          IconButton(
+                            onPressed: () => _onDeletePress(model, context),
+                            icon: Icon(
+                              Icons.delete,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

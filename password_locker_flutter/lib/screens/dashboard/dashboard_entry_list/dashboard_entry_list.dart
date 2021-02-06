@@ -17,7 +17,9 @@ class DashboardEntryList extends StatelessWidget {
     PasswordAdditionModel passwordAdditionModel =
         await showDialog<PasswordAdditionModel>(
       context: context,
-      builder: (_) => AddPasswordDialog(),
+      builder: (_) => AddPasswordDialog(
+        passwordAdditionModel: PasswordAdditionModel(),
+      ),
     );
 
     if (passwordAdditionModel == null) return;

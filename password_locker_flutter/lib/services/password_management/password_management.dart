@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:encrypt/encrypt.dart';
 import 'package:passwordlocker/models/password_addition_model.dart';
 import 'package:passwordlocker/services/database/database.dart';

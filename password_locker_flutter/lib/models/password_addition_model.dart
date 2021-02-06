@@ -3,5 +3,9 @@ class PasswordAdditionModel {
   String loginID;
   String password;
 
-  PasswordAdditionModel({this.serviceProvider, this.loginID, this.password});
+  PasswordAdditionModel({
+    this.serviceProvider,
+    this.loginID,
+    this.password,
+  });
 }

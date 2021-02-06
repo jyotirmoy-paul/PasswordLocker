@@ -13,6 +13,17 @@ class Backend {
       .doc(FirebaseAuth.instance.currentUser.uid)
       .collection(kUserPasswordsCollection);
 
+  static Future<void> deletePassword(PasswordModel passwordModel) =>
+      _getReference().doc(passwordModel.firebaseKey).delete();
+
+  static Future<void> editPassword(PasswordModel modifiedPasswordModel) {
+    modifiedPasswordModel.lastUpdatedDate =
+        DateFormat('d MMM yy').format(DateTime.now());
+    return _getReference()
+        .doc(modifiedPasswordModel.firebaseKey)
+        .set(modifiedPasswordModel.toJson());
+  }
+
   static Future<void> savePassword(
       PasswordAdditionModel passwordAdditionModel) async {
     assert(passwordAdditionModel.loginID != null);

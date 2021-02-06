@@ -5,15 +5,19 @@ import 'package:passwordlocker/services/database/database.dart';
 import 'package:provider/provider.dart';
 
 class AddPasswordDialog extends StatelessWidget {
-  final PasswordAdditionModel _passwordAdditionModel = PasswordAdditionModel();
+  AddPasswordDialog({
+    @required this.passwordAdditionModel,
+  });
+
+  final PasswordAdditionModel passwordAdditionModel;
 
   void _onSavePress(BuildContext context) async {
-    if (_passwordAdditionModel.password == null ||
-        _passwordAdditionModel.password.isEmpty) return;
-    if (_passwordAdditionModel.serviceProvider == null ||
-        _passwordAdditionModel.serviceProvider.isEmpty) return;
-    if (_passwordAdditionModel.loginID == null ||
-        _passwordAdditionModel.loginID.isEmpty) return;
+    if (passwordAdditionModel.password == null ||
+        passwordAdditionModel.password.isEmpty) return;
+    if (passwordAdditionModel.serviceProvider == null ||
+        passwordAdditionModel.serviceProvider.isEmpty) return;
+    if (passwordAdditionModel.loginID == null ||
+        passwordAdditionModel.loginID.isEmpty) return;
 
     // check for saved master password locally, if not found prompt for the master password
     String masterPassword = await Database.getMasterPassword();
@@ -25,11 +29,11 @@ class AddPasswordDialog extends StatelessWidget {
       );
 
       if (done)
-        Navigator.pop(context, _passwordAdditionModel);
+        Navigator.pop(context, passwordAdditionModel);
       else
         Navigator.pop(context);
     } else {
-      Navigator.pop(context, _passwordAdditionModel);
+      Navigator.pop(context, passwordAdditionModel);
     }
   }
 
@@ -38,7 +42,8 @@ class AddPasswordDialog extends StatelessWidget {
     @required String hintText,
     @required IconData prefixIcon,
     @required Function(String) onChanged,
-    bool visibilityStateChangeReq = false,
+    bool obscureText = false,
+    String defaultValue,
   }) =>
       Container(
         margin: EdgeInsets.symmetric(
@@ -67,8 +72,11 @@ class AddPasswordDialog extends StatelessWidget {
                 children: [
                   Flexible(
                     child: Consumer<ValueNotifier<bool>>(
-                      builder: (_, vnObscureText, __) => TextField(
-                        obscureText: vnObscureText.value,
+                      builder: (_, vnObscureText, __) => TextFormField(
+                        initialValue: defaultValue,
+                        enabled: defaultValue == null,
+                        obscureText:
+                            obscureText == false ? false : vnObscureText.value,
                         onChanged: onChanged,
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(
@@ -87,12 +95,12 @@ class AddPasswordDialog extends StatelessWidget {
                       ),
                     ),
                   ),
-                  visibilityStateChangeReq
+                  obscureText
                       ? const SizedBox(
                           width: 10.0,
                         )
                       : const SizedBox.shrink(),
-                  visibilityStateChangeReq
+                  obscureText
                       ? Consumer<ValueNotifier<bool>>(
                           builder: (_, vnObscureText, __) => IconButton(
                             icon: Icon(
@@ -138,7 +146,8 @@ class AddPasswordDialog extends StatelessWidget {
               hintText: 'Website / App name',
               prefixIcon: Icons.public,
               onChanged: (String s) =>
-                  _passwordAdditionModel.serviceProvider = s,
+                  passwordAdditionModel.serviceProvider = s,
+              defaultValue: this.passwordAdditionModel.serviceProvider,
             ),
 
             /* input the login id */
@@ -146,7 +155,8 @@ class AddPasswordDialog extends StatelessWidget {
               title: 'Login ID / Phone Number',
               hintText: 'Login Details',
               prefixIcon: Icons.assignment_ind,
-              onChanged: (String s) => _passwordAdditionModel.loginID = s,
+              onChanged: (String s) => passwordAdditionModel.loginID = s,
+              defaultValue: this.passwordAdditionModel.loginID,
             ),
 
             /* input the password */
@@ -154,8 +164,8 @@ class AddPasswordDialog extends StatelessWidget {
               title: 'Password of the account',
               hintText: 'Password',
               prefixIcon: Icons.lock,
-              onChanged: (String s) => _passwordAdditionModel.password = s,
-              visibilityStateChangeReq: true,
+              onChanged: (String s) => passwordAdditionModel.password = s,
+              obscureText: true,
             ),
             const SizedBox(
               height: 30.0,
